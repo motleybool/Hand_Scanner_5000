@@ -1,20 +1,44 @@
+/**
+ * Hand Scanner 5000
+ *
+ * Simulated hand scanner 
+ * for E's 3rd Grade Class
+ */
 #include <Arduino.h>
+#include "bsp.h"
 
-#define LED D1 // Led in NodeMCU at pin GPIO16 (D0).
-
-void setup() {
-  Serial.begin(115200);
-  Serial.setDebugOutput(true);
-  
-pinMode(LED, OUTPUT); // set the digital pin as output.
+//=========================================================
+//- Heartbeat Function
+//-  strobe the onboard LED to indicate active loop
+//=========================================================
+void heartbeat(void) 
+{
+    blinkLED(ONBOARD_LED, 2);
 }
 
-void loop() {
-digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
-                      //the LED is on; this is because it is acive low on the ESP8266.
-delay(1000);          // wait for 1 second.
-digitalWrite(LED, LOW); // turn the LED on.
-delay(1000);         // wait for 1 second.
-Serial.println("Test Console...");
+//=========================================================
+//- Setup
+//-  init routine for arduino
+//=========================================================
+void setup() 
+{
+  //setup serial monitor
+  Serial.begin(115200);
+  Serial.setDebugOutput(true);
 
+  //configure heartbeat LED
+  configureLED(ONBOARD_LED);
+}
+
+//=========================================================
+//- Loop
+//-  main control loop for arduino
+//=========================================================
+void loop() 
+{
+  // run heartbeat
+  heartbeat();
+  
+  delay(1000);
+  Serial.println("Test Console");
 }
