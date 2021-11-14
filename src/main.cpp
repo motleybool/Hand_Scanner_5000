@@ -3,6 +3,9 @@
 #define LED D1 // Led in NodeMCU at pin GPIO16 (D0).
 
 void setup() {
+  Serial.begin(115200);
+  Serial.setDebugOutput(true);
+  
 pinMode(LED, OUTPUT); // set the digital pin as output.
 }
 
@@ -12,4 +15,6 @@ digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level 
 delay(1000);          // wait for 1 second.
 digitalWrite(LED, LOW); // turn the LED on.
 delay(1000);         // wait for 1 second.
+Serial.println("Test Console...");
+
 }
