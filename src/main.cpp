@@ -34,6 +34,9 @@ void setup()
   configureLED(GREEN_LED);
   configureLED(BLUE_LED);
 
+  //Do System Cleanup
+  //-stuff here. 
+
 }
 
 //=========================================================
