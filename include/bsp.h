@@ -3,6 +3,10 @@
 //PIN Definitions
 #define ONBOARD_LED D0 // Led in NodeMCU at pin GPIO16 (D0)
 
+#define RED_LED D2
+#define BLUE_LED D3
+#define GREEN_LED D4
+
 
 //constants
 static const unsigned int BLINK_LED_ON = 200;

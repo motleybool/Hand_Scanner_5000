@@ -28,6 +28,12 @@ void setup()
 
   //configure heartbeat LED
   configureLED(ONBOARD_LED);
+
+  //temp setup of rgb
+  configureLED(RED_LED);
+  configureLED(GREEN_LED);
+  configureLED(BLUE_LED);
+
 }
 
 //=========================================================
@@ -38,7 +44,33 @@ void loop()
 {
   // run heartbeat
   heartbeat();
+
+  turnOffLED(GREEN_LED);
+  turnOffLED(BLUE_LED);
+  turnOffLED(RED_LED);
+  //delay(500);
   
-  delay(1000);
+  turnOnLED(RED_LED);
+  turnOnLED(BLUE_LED);
+  delay(500);  
+
+  turnOffLED(GREEN_LED);
+  turnOffLED(BLUE_LED);
+  turnOffLED(RED_LED);
+  //delay(500);
+  
+  turnOnLED(RED_LED);
+  turnOnLED(GREEN_LED);
+  delay(500);  
+
+  turnOffLED(GREEN_LED);
+  turnOffLED(BLUE_LED);
+  turnOffLED(RED_LED);
+  //delay(500);
+  
+  turnOnLED(GREEN_LED);
+  turnOnLED(BLUE_LED);
+  delay(500);  
+
   Serial.println("Test Console");
 }
