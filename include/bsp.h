@@ -1,5 +1,8 @@
 //- Header defines for board convience functions
 
+#ifndef _BSP_H_
+#define _BSP_H_
+
 //PIN Definitions
 #define ONBOARD_LED D0 // Led in NodeMCU at pin GPIO16 (D0)
 
@@ -21,3 +24,6 @@ void configureLED(int pin);
 void turnOnLED(int pin);
 void turnOffLED(int pin);
 void blinkLED(int pin, int blinks = 1);
+
+
+#endif

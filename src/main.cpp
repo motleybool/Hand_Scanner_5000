@@ -6,6 +6,9 @@
  */
 #include <Arduino.h>
 #include "bsp.h"
+#include "sound_controller.h"
+
+LED driver snippet: https://gist.github.com/chadpaulson/1834442
 
 //=========================================================
 //- Heartbeat Function
@@ -34,9 +37,9 @@ void setup()
   configureLED(GREEN_LED);
   configureLED(BLUE_LED);
 
-  //Do System Cleanup
-  //-stuff here. 
-  //-full editor}
+  //Test Sound
+  soundTest();
+}
 
 //=========================================================
 //- Loop
