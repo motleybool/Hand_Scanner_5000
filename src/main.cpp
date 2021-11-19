@@ -7,8 +7,9 @@
 #include <Arduino.h>
 #include "bsp.h"
 #include "sound_controller.h"
+#include "scanner_controller.h"
 
-LED driver snippet: https://gist.github.com/chadpaulson/1834442
+//LED driver snippet: https://gist.github.com/chadpaulson/1834442
 
 //=========================================================
 //- Heartbeat Function
@@ -38,7 +39,9 @@ void setup()
   configureLED(BLUE_LED);
 
   //Test Sound
-  soundTest();
+  //soundTest();
+
+  
 }
 
 //=========================================================
@@ -78,4 +81,6 @@ void loop()
   delay(500);  
 
   Serial.println("Test Console");
+  
+  lightReading();
 }
