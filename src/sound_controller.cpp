@@ -5,6 +5,15 @@
  */
 #include "sound_controller.h"
 
+
+
+SoundController::SoundController(int buzzer_pin)
+{
+  //Do Init
+}
+
+
+
 #define buzzerPin D6 // output pin for buzzer
 //https://github.com/robsoncouto/arduino-songs
 
