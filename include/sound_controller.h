@@ -7,18 +7,25 @@
 #include "bsp.h"
 
 
-class SoundController 
-{
-  private:
-    int width, height;
-  public:
-    void set_values (int,int);
-    int area (void);
-}
-
-
 //=========================================================
 //- SoundTest Function
 //-  tests the buzzer functionality
 //=========================================================
-void soundTest(void);
+class SoundController 
+{
+  private:
+    //- Private vars
+    int width, height;
+
+  public:
+    //=========================================================
+    //- Constructor
+    //=========================================================
+    SoundController(int buzzer_pin);
+
+    //=========================================================
+    //- SoundTest Function
+    //-  tests the buzzer functionality
+    //=========================================================
+    void soundTest(void);
+}
