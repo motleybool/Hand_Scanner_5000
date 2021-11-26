@@ -8,6 +8,7 @@
 #include "bsp.h"
 #include "sound_controller.h"
 #include "scanner_controller.h"
+#include "keypad_controller.h"
 
 //LED driver snippet: https://gist.github.com/chadpaulson/1834442
 
@@ -31,16 +32,17 @@ void setup()
   Serial.setDebugOutput(true);
 
   //configure heartbeat LED
-  configureLED(ONBOARD_LED);
+  // configureLED(ONBOARD_LED);
 
   //temp setup of rgb
-  configureLED(RED_LED);
-  configureLED(GREEN_LED);
-  configureLED(BLUE_LED);
+  // configureLED(RED_LED);
+  // configureLED(GREEN_LED);
+  // configureLED(BLUE_LED);
 
   //Test Sound
   //soundTest();
 
+  setup_keypad();
   
 }
 
@@ -53,34 +55,37 @@ void loop()
   // run heartbeat
   heartbeat();
 
-  turnOffLED(GREEN_LED);
-  turnOffLED(BLUE_LED);
-  turnOffLED(RED_LED);
-  //delay(500);
-  
-  turnOnLED(RED_LED);
-  turnOnLED(BLUE_LED);
-  delay(500);  
+  //Test Keypad
+  test_keypad();
 
-  turnOffLED(GREEN_LED);
-  turnOffLED(BLUE_LED);
-  turnOffLED(RED_LED);
-  //delay(500);
+  // turnOffLED(GREEN_LED);
+  // turnOffLED(BLUE_LED);
+  // turnOffLED(RED_LED);
+  // //delay(500);
   
-  turnOnLED(RED_LED);
-  turnOnLED(GREEN_LED);
-  delay(500);  
+  // turnOnLED(RED_LED);
+  // turnOnLED(BLUE_LED);
+  // delay(500);  
 
-  turnOffLED(GREEN_LED);
-  turnOffLED(BLUE_LED);
-  turnOffLED(RED_LED);
-  //delay(500);
+  // turnOffLED(GREEN_LED);
+  // turnOffLED(BLUE_LED);
+  // turnOffLED(RED_LED);
+  // //delay(500);
   
-  turnOnLED(GREEN_LED);
-  turnOnLED(BLUE_LED);
-  delay(500);  
+  // turnOnLED(RED_LED);
+  // turnOnLED(GREEN_LED);
+  // delay(500);  
 
-  Serial.println("Test Console");
+  // turnOffLED(GREEN_LED);
+  // turnOffLED(BLUE_LED);
+  // turnOffLED(RED_LED);
+  // //delay(500);
   
-  lightReading();
+  // turnOnLED(GREEN_LED);
+  // turnOnLED(BLUE_LED);
+  // delay(500);  
+
+  // Serial.println("Test Console");
+  
+  // lightReading();
 }
