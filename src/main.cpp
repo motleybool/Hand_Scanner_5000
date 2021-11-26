@@ -12,6 +12,8 @@
 
 //LED driver snippet: https://gist.github.com/chadpaulson/1834442
 
+#define test_led D6
+
 //=========================================================
 //- Heartbeat Function
 //-  strobe the onboard LED to indicate active loop
@@ -44,6 +46,7 @@ void setup()
 
   setup_keypad();
   
+  configureLED(test_led);
 }
 
 //=========================================================
@@ -57,6 +60,8 @@ void loop()
 
   //Test Keypad
   test_keypad();
+
+  turnOnLED(test_led);
 
   // turnOffLED(GREEN_LED);
   // turnOffLED(BLUE_LED);

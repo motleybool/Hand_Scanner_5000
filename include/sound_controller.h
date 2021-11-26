@@ -28,4 +28,4 @@ class SoundController
     //-  tests the buzzer functionality
     //=========================================================
     void soundTest(void);
-}
+};

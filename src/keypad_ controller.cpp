@@ -12,6 +12,8 @@ const byte SX1509_ADDRESS = 0x3E;  // SX1509 I2C address (00)
 #define KEY_ROWS 4
 #define KEY_COLS 3
 
+#define TEST_LED_PIN 5
+
 SX1509 io; // Create an SX1509 object
 
 // Handy array we'll use to map row/column pairs to 
@@ -30,6 +32,13 @@ void setup_keypad(void)
     while (1)
       ;
   }
+
+  delay(1000);
+
+  io.pinMode(TEST_LED_PIN, ANALOG_OUTPUT);
+  //io.digitalWrite(TEST_LED_PIN, LOW);
+  io.breathe(TEST_LED_PIN, 1000, 500, 500, 250);
+  
 
   // To initialize the keypad engine, you at least need
   // to tell it how many rows and columns are in the matrix.
