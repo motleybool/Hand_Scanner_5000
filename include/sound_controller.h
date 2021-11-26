@@ -6,8 +6,26 @@
 #include <Arduino.h>
 #include "bsp.h"
 
+
 //=========================================================
 //- SoundTest Function
 //-  tests the buzzer functionality
 //=========================================================
-void soundTest(void);
+class SoundController 
+{
+  private:
+    //- Private vars
+    int width, height;
+
+  public:
+    //=========================================================
+    //- Constructor
+    //=========================================================
+    SoundController(int buzzer_pin);
+
+    //=========================================================
+    //- SoundTest Function
+    //-  tests the buzzer functionality
+    //=========================================================
+    void soundTest(void);
+}
