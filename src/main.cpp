@@ -16,7 +16,7 @@
 
 //Controller objects
 SoundController* soundController;
-
+KeypadController* keypadController;
 
 //=========================================================
 //- Heartbeat Function
@@ -41,6 +41,9 @@ void setup()
   soundController = new SoundController(BUZZER_PIN);
   soundController->soundTest();
 
+  //setup keypad controller
+  keypadController = new KeypadController(KEYPAD_ADDRESS, KEYPAD_LED_1, KEYPAD_LED_2, KEYPAD_LED_3, KEYPAD_INT_PIN);
+
   //configure heartbeat LED
   // configureLED(ONBOARD_LED);
 
@@ -48,11 +51,6 @@ void setup()
   // configureLED(RED_LED);
   // configureLED(GREEN_LED);
   // configureLED(BLUE_LED);
-
-  //Test Sound
-  //soundTest();
-
-  setup_keypad();
   
   configureLED(test_led);
 }
@@ -67,7 +65,7 @@ void loop()
   heartbeat();
 
   //Test Keypad
-  test_keypad();
+  keypadController->keypadTest();
 
   turnOnLED(test_led);
 

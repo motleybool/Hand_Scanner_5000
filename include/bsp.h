@@ -15,6 +15,12 @@
 //=========================================================
 //- Keypad Hardware
 //=========================================================
+const byte KEYPAD_ADDRESS = 0x3E;  // SX1509 I2C address (00)
+#define KEYPAD_INT_PIN D0
+#define KEYPAD_LED_1 14
+#define KEYPAD_LED_2 13
+#define KEYPAD_LED_3 12
+
 
 
 //=========================================================
