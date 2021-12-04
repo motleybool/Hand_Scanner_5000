@@ -35,6 +35,12 @@ class KeypadController
                                             {'4', '5', '6'},
                                             {'7', '8', '9'},
                                             {'*', '0', '#'}};
+    const int keyValue[KEY_ROWS][KEY_COLS] = {
+                                            {1, 2, 3},
+                                            {4, 5, 6},
+                                            {7, 8, 9},
+                                            {55, 0, 99}};
+    
     
   public:
     //=========================================================
@@ -47,6 +53,19 @@ class KeypadController
     //-  tests the keypad functionality
     //=========================================================
     void keypadTest(void);
+
+    //=========================================================
+    //- setPinCode Function
+    //-  sets the pin code value
+    //=========================================================
+    void setPinCode(void);
+
+    //=========================================================
+    //- registerKeypress Function
+    //-  checks for and fetches key value
+    //-  returns true if sequence is complete
+    //=========================================================
+    bool registerKeypress(void);
 
 
 

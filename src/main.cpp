@@ -28,6 +28,19 @@ void heartbeat(void)
 }
 
 //=========================================================
+//- System Test Function
+//-  run through each controller's tests
+//=========================================================
+void system_test(void) 
+{
+  //Test Sound Controller
+  soundController->soundTest();
+
+  //Test Keypad
+  keypadController->keypadTest();
+}
+
+//=========================================================
 //- Setup
 //-  init routine for arduino
 //=========================================================
@@ -39,7 +52,6 @@ void setup()
 
   //setup sound controller
   soundController = new SoundController(BUZZER_PIN);
-  soundController->soundTest();
 
   //setup keypad controller
   keypadController = new KeypadController(KEYPAD_ADDRESS, KEYPAD_LED_1, KEYPAD_LED_2, KEYPAD_LED_3, KEYPAD_INT_PIN);
@@ -64,8 +76,10 @@ void loop()
   // run heartbeat
   heartbeat();
 
-  //Test Keypad
-  keypadController->keypadTest();
+  // run tests
+  system_test();
+
+
 
   turnOnLED(test_led);
 
