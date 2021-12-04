@@ -14,6 +14,10 @@
 
 #define test_led D6
 
+//Controller objects
+SoundController* soundController;
+
+
 //=========================================================
 //- Heartbeat Function
 //-  strobe the onboard LED to indicate active loop
@@ -32,6 +36,10 @@ void setup()
   //setup serial monitor
   Serial.begin(115200);
   Serial.setDebugOutput(true);
+
+  //setup sound controller
+  soundController = new SoundController(BUZZER_PIN);
+  soundController->soundTest();
 
   //configure heartbeat LED
   // configureLED(ONBOARD_LED);

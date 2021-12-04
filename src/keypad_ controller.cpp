@@ -12,7 +12,9 @@ const byte SX1509_ADDRESS = 0x3E;  // SX1509 I2C address (00)
 #define KEY_ROWS 4
 #define KEY_COLS 3
 
-#define TEST_LED_PIN 5
+#define TEST_LED_PIN 14
+#define TEST_LED_PIN2 13
+#define TEST_LED_PIN3 12
 
 SX1509 io; // Create an SX1509 object
 
@@ -36,8 +38,13 @@ void setup_keypad(void)
   delay(1000);
 
   io.pinMode(TEST_LED_PIN, ANALOG_OUTPUT);
+  io.pinMode(TEST_LED_PIN2, ANALOG_OUTPUT);
+  io.pinMode(TEST_LED_PIN3, ANALOG_OUTPUT);
   //io.digitalWrite(TEST_LED_PIN, LOW);
   io.breathe(TEST_LED_PIN, 1000, 500, 500, 250);
+  io.breathe(TEST_LED_PIN2, 1000, 500, 500, 250);
+  io.breathe(TEST_LED_PIN3, 1000, 500, 500, 250);
+
   
 
   // To initialize the keypad engine, you at least need
