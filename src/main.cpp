@@ -10,12 +10,11 @@
 #include "scanner_controller.h"
 #include "keypad_controller.h"
 
-//LED driver snippet: https://gist.github.com/chadpaulson/1834442
-
 #define test_led D6
 
 //Controller objects
 SoundController* soundController;
+ScannerController* scannerController;
 KeypadController* keypadController;
 
 //=========================================================
@@ -34,10 +33,14 @@ void heartbeat(void)
 void system_test(void) 
 {
   //Test Sound Controller
-  soundController->soundTest();
+  //soundController->soundTest();
 
   //Test Keypad
-  keypadController->keypadTest();
+  //keypadController->keypadTest();
+
+  //Scanner Test
+  scannerController->scannerTest();
+
 }
 
 //=========================================================
@@ -55,6 +58,12 @@ void setup()
 
   //setup keypad controller
   keypadController = new KeypadController(KEYPAD_ADDRESS, KEYPAD_LED_1, KEYPAD_LED_2, KEYPAD_LED_3, KEYPAD_INT_PIN);
+
+  //setup scanner controller
+  // scannerController = new ScannerController(SCANNER_ADDRESS, LIGHT_SENSOR_PIN, SC_LED_1_RED, SC_LED_1_GREEN, SC_LED_1_BLUE,
+  //                                                                              SC_LED_2_RED, SC_LED_2_GREEN, SC_LED_2_BLUE,
+  //                                                                              SC_LED_3_RED, SC_LED_3_GREEN, SC_LED_3_BLUE,
+  //                                                                              SC_LED_4_RED, SC_LED_4_GREEN, SC_LED_4_BLUE);
 
   //configure heartbeat LED
   // configureLED(ONBOARD_LED);
