@@ -127,7 +127,11 @@ void SoundController::playSong(Song song)
 void SoundController::soundTest(void)
 {
   //implement test
-  playSong(Song::Imperial);
+  //playSong(Song::Imperial);
+  playSong(Song::Jinglebells);
+  playSong(Song::Nokia);
+  //playSong(Song::Starwars);
+  playSong(Song::Fail);
 }
 
 
