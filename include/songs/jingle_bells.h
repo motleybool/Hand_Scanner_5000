@@ -13,7 +13,7 @@
 namespace JingleBells
 {
         // change this to make the song slower or faster
-        int tempo = 150;
+        int tempo = 300;
 
         // notes of the moledy followed by the duration.
         // a 4 means a quarter note, 8 an eighteenth , 16 sixteenth, so on
@@ -21,30 +21,15 @@ namespace JingleBells
         // so -4 means a dotted quarter note, that is, a quarter plus an eighteenth!!
         int melody[] = {
 
-//  E, E, E,R,
-//  E, E, E,R,
-//  E, G, C, D, E, R,
-//  f, f, f,f, f, E, E,E, E, D ,D,E, D, R, G ,R,
+        NOTE_E4, 2, NOTE_E4, 2, NOTE_E4, -4, REST, 4, 
+        NOTE_E4, 2, NOTE_E4, 2, NOTE_E4, -4, REST, 4, 
+        NOTE_E4, 2, NOTE_G4, 2, NOTE_C4, -4, NOTE_D4, 4, NOTE_E4, -4, REST, -8,
 
-//  E, E, E,R,
-//  E, E, E,R,
-//  E, G, C, D, E, R,
-//  f, f, f,f, f, E, E, E,  G,G, f, D, C,R
+        NOTE_F4, 2, NOTE_F4, 2, NOTE_F4, -4, REST, 0, 
+        NOTE_F4, 4, NOTE_F4, 2, NOTE_E4, 2, NOTE_E4, 2, REST, 0, 
 
-        NOTE_E4, 4, REST, 4, NOTE_E4, 4, REST, 4, NOTE_E4, 4, REST, 4, 
-        NOTE_E4, 4, REST, 4, NOTE_E4, 4, REST, 4, NOTE_E4, 4, REST, 4, 
-        NOTE_E4, 4, NOTE_G4, 4, NOTE_C4, 4, NOTE_D4, 4, NOTE_E4, 4, REST, 4,
-
-        NOTE_F4, 4, NOTE_F4, 4, NOTE_F4, 8, NOTE_F4, 4, NOTE_E4, 4, NOTE_E4, 8, NOTE_E4, 4, NOTE_E4, 4,
-        NOTE_D4, 4, NOTE_D4, 8, NOTE_E4, 4, NOTE_D4, 4, REST, 4, NOTE_G4, 4, REST, 4,  
-
-        NOTE_E4, 4, REST, 4, NOTE_E4, 4, REST, 4, NOTE_E4, 4, REST, 4, 
-        NOTE_E4, 4, REST, 4, NOTE_E4, 4, REST, 4, NOTE_E4, 4, REST, 4, 
-        NOTE_E4, 4, NOTE_G4, 4, NOTE_C4, 4, NOTE_D4, 4, NOTE_E4, 4, REST, 4,
-
-        NOTE_F4, 4, NOTE_F4, 4, NOTE_F4, 8, NOTE_F4, 4, NOTE_E4, 4, NOTE_E4, 4, NOTE_E4, 2, NOTE_G4, 8, NOTE_G4, 4, 
-        NOTE_F4, 4, NOTE_D4, 4, NOTE_C4, 4, REST, 4,
-    };
+        NOTE_E4, 4, NOTE_E4, 4, NOTE_G4, 2, NOTE_G4, 2, NOTE_F4, 2, NOTE_D4, 2, NOTE_C4, -8, REST, -8, 
+        };
 }
 
 #endif

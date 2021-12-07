@@ -24,7 +24,7 @@ SoundController::SoundController(int buzzer_pin)
 
 //=========================================================
 //- playSong Function
-//-  plays the song passed on the buzzer
+//-  plays the song on the buzzer
 //=========================================================
 void SoundController::playSong(Song song)
 {
@@ -118,6 +118,98 @@ void SoundController::playSong(Song song)
   }
 
   Serial.println("Song Complete...");
+}
+
+//=========================================================
+//- playSoundFX Function
+//-  plays the souund fx on the buzzer
+//=========================================================
+void SoundController::playSoundFX(SoundFX fx)
+{
+  int NOTE_SUSTAIN = 250;
+
+  Serial.println("Playing FX...");
+
+  //Setup Fx
+  switch (fx)
+  {
+  case SoundFX::Failure:
+    tone(buzzer,NOTE_G4);
+    delay(250);
+    tone(buzzer,NOTE_C4);
+    delay(500);
+    noTone(buzzer);
+    break;
+  case SoundFX::Succeed:
+    tone(buzzer,NOTE_A5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_B5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_C5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_B5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_C5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_D5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_C5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_D5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_E5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_D5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_E5);
+    delay(NOTE_SUSTAIN);
+    tone(buzzer,NOTE_E5);
+    delay(NOTE_SUSTAIN);
+    noTone(buzzer);
+    break;
+  case SoundFX::OneUp:
+    tone(buzzer,NOTE_E6,125);
+    delay(130);
+    tone(buzzer,NOTE_G6,125);
+    delay(130);
+    tone(buzzer,NOTE_E7,125);
+    delay(130);
+    tone(buzzer,NOTE_C7,125);
+    delay(130);
+    tone(buzzer,NOTE_D7,125);
+    delay(130);
+    tone(buzzer,NOTE_G7,125);
+    delay(125);
+    noTone(buzzer);
+    break;
+  case SoundFX::Coin:
+    tone(buzzer,NOTE_B5,100);
+    delay(100);
+    tone(buzzer,NOTE_E6,850);
+    delay(800);
+    noTone(buzzer);
+    break;
+  case SoundFX::Fireball:
+    tone(buzzer,NOTE_G4,35);
+    delay(35);
+    tone(buzzer,NOTE_G5,35);
+    delay(35);
+    tone(buzzer,NOTE_G6,35);
+    delay(35);
+    noTone(buzzer);
+    break;    
+
+  //Default to failure tone
+  default:
+    tone(buzzer,NOTE_G4);
+    delay(250);
+    tone(buzzer,NOTE_C4);
+    delay(500);
+    noTone(buzzer);
+    break;
+  }
+
+  Serial.println("FX Complete...");
 }
 
 //=========================================================

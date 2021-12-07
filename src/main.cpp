@@ -87,7 +87,7 @@ void loop()
   if(code != CODE_TYPE::CODE_IMPCOMPLETE)
   {
     //Start Scanning Animation
-    delay(2000);
+    delay(1000);
 
     //Check Light Sensor (if active)
 
@@ -96,15 +96,20 @@ void loop()
     {
     case CODE_TYPE::VALID_CODE:
       scannerController->animationValidated();
+      //soundController->playSoundFX(SoundController::SoundFX::Succeed);
+      soundController->playSoundFX(SoundController::SoundFX::OneUp);
       Serial.println("Success!");
       break;
     case CODE_TYPE::INVALID_CODE:
       scannerController->animationInvalidated();
+      soundController->playSoundFX(SoundController::SoundFX::Failure);
       Serial.println("Failure!");
       break;
     case CODE_TYPE::TURN_OFF_SENSOR:
       scannerController->disableLightSensor();
       scannerController->animationSensorOff();
+      soundController->playSoundFX(SoundController::SoundFX::Coin);
+      //soundController->playSoundFX(SoundController::SoundFX::Fireball);
       Serial.println("Light Sensor Turned Off");
       break;
     case CODE_TYPE::XMAS_TIME:

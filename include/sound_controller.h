@@ -27,6 +27,7 @@ class SoundController
 
     //Songs
     enum Song {Nokia, Starwars, Imperial, Jinglebells, Fail};
+    enum SoundFX {Failure, Succeed, OneUp, Fireball, Coin};
 
     //=========================================================
     //- SoundTest Function
@@ -36,7 +37,13 @@ class SoundController
 
     //=========================================================
     //- playSong Function
-    //-  plays the song passed on the buzzer
+    //-  plays the song on the buzzer
     //=========================================================
     void playSong(Song song);
+
+    //=========================================================
+    //- playSoundFX Function
+    //-  plays the souund fx on the buzzer
+    //=========================================================
+    void playSoundFX(SoundFX fx);
 };
