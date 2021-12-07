@@ -24,37 +24,38 @@ ScannerController::ScannerController(int gpio_exp_addr, int sensor_pin, int led_
         ;
     }
 
+    int PIN_MODE = ANALOG_OUTPUT;
     //setup rbg led 1
     LED_1.red = led_1_red;
-    pIO->pinMode(LED_1.red, OUTPUT);
+    pIO->pinMode(LED_1.red, PIN_MODE);
     LED_1.green = led_1_green;
-    pIO->pinMode(LED_1.green, OUTPUT);
+    pIO->pinMode(LED_1.green, PIN_MODE);
     LED_1.blue = led_1_blue;
-    pIO->pinMode(LED_1.blue, OUTPUT);
+    pIO->pinMode(LED_1.blue, PIN_MODE);
 
     //setup rbg led 2
     LED_2.red = led_2_red;
-    pIO->pinMode(LED_2.red, OUTPUT);
+    pIO->pinMode(LED_2.red, PIN_MODE);
     LED_2.green = led_2_green;
-    pIO->pinMode(LED_2.green, OUTPUT);
+    pIO->pinMode(LED_2.green, PIN_MODE);
     LED_2.blue = led_2_blue;
-    pIO->pinMode(LED_2.blue, OUTPUT);
+    pIO->pinMode(LED_2.blue, PIN_MODE);
     
     //setup rbg led 3
     LED_3.red = led_3_red;
-    pIO->pinMode(LED_3.red, OUTPUT);
+    pIO->pinMode(LED_3.red, PIN_MODE);
     LED_3.green = led_3_green;
-    pIO->pinMode(LED_3.green, OUTPUT);
+    pIO->pinMode(LED_3.green, PIN_MODE);
     LED_3.blue = led_3_blue;
-    pIO->pinMode(LED_3.blue, OUTPUT);
+    pIO->pinMode(LED_3.blue, PIN_MODE);
 
     //setup rbg led 4
     LED_4.red = led_4_red;
-    pIO->pinMode(LED_4.red, OUTPUT);
+    pIO->pinMode(LED_4.red, PIN_MODE);
     LED_4.green = led_4_green;
-    pIO->pinMode(LED_4.green, OUTPUT);
+    pIO->pinMode(LED_4.green, PIN_MODE);
     LED_4.blue = led_4_blue;
-    pIO->pinMode(LED_4.blue, OUTPUT);
+    pIO->pinMode(LED_4.blue, PIN_MODE);
 
     //setup light sensor pin
     use_light_sensor = true;
@@ -69,18 +70,6 @@ ScannerController::ScannerController(int gpio_exp_addr, int sensor_pin, int led_
 void ScannerController::resetController(void)
 {
     //Reset LEDs
-    // pIO->digitalWrite(LED_1.red, HIGH);
-    // pIO->digitalWrite(LED_1.green, HIGH);
-    // pIO->digitalWrite(LED_1.blue, HIGH);
-    // pIO->digitalWrite(LED_2.red, HIGH);
-    // pIO->digitalWrite(LED_2.green, HIGH);
-    // pIO->digitalWrite(LED_2.blue, HIGH);
-    // pIO->digitalWrite(LED_3.red, HIGH);
-    // pIO->digitalWrite(LED_3.green, HIGH);
-    // pIO->digitalWrite(LED_3.blue, HIGH);
-    // pIO->digitalWrite(LED_4.red, HIGH);
-    // pIO->digitalWrite(LED_4.green, HIGH);
-    // pIO->digitalWrite(LED_4.blue, HIGH);
     turnOffLED(LED_1);
     turnOffLED(LED_2);
     turnOffLED(LED_3);
@@ -120,53 +109,178 @@ bool ScannerController::takeLightReading(void)
 //=========================================================
 //- RGB LED Convience Functions
 //=========================================================
+void ScannerController::turnOff(int pin)
+{
+    //pIO->digitalWrite(pin, HIGH);
+    pIO->analogWrite(pin, 0);
+}
+void ScannerController::turnOn(int pin)
+{
+    //pIO->digitalWrite(pin, LOW);
+    pIO->analogWrite(pin, 255);
+}
 void ScannerController::turnOffLED(RGB led)
 {
-    pIO->digitalWrite(led.red, HIGH);
-    pIO->digitalWrite(led.green, HIGH);
-    pIO->digitalWrite(led.blue, HIGH);
+    turnOff(led.red);
+    turnOff(led.green);
+    turnOff(led.blue);
 }
-void ScannerController::turnOnRed(RGB led)
+void ScannerController::turnOnLED(RGB led, LED_COLORS color)
 {
-    pIO->digitalWrite(led.red, LOW);
-    pIO->digitalWrite(led.green, HIGH);
-    pIO->digitalWrite(led.blue, HIGH);
+    switch (color)
+    {
+    case LED_COLORS::RED:
+        turnOn(led.red);
+        turnOff(led.green);
+        turnOff(led.blue);
+        break;
+    case LED_COLORS::GREEN:
+        turnOff(led.red);
+        turnOn(led.green);
+        turnOff(led.blue);
+        break;
+    case LED_COLORS::BLUE:
+        turnOff(led.red);
+        turnOff(led.green);
+        turnOn(led.blue);
+        break;
+    case LED_COLORS::YELLOW:
+        turnOn(led.red);
+        turnOn(led.green);
+        turnOff(led.blue);
+        break;
+    case LED_COLORS::CYAN:
+        turnOff(led.red);
+        turnOn(led.green);
+        turnOn(led.blue);
+        break;
+    case LED_COLORS::MAGENTA:
+        turnOn(led.red);
+        turnOff(led.green);
+        turnOn(led.blue);
+        break;
+    case LED_COLORS::WHITE:
+        turnOn(led.red);
+        turnOn(led.green);
+        turnOn(led.blue);
+        break;
+    default:
+        turnOffLED(led);
+        break;
+    }
 }
-void ScannerController::turnOnGreen(RGB led)
+//breathing functions
+void ScannerController::startBreathing(int pin)
 {
-    pIO->digitalWrite(led.red, HIGH);
-    pIO->digitalWrite(led.green, LOW);
-    pIO->digitalWrite(led.blue, HIGH);
+    pIO->breathe(pin, 1000, 500, 500, 250);
+    //pIO->setupBlink(pin, );
 }
-void ScannerController::turnOnBlue(RGB led)
+void ScannerController::stopBreathing(int pin)
 {
-    pIO->digitalWrite(led.red, HIGH);
-    pIO->digitalWrite(led.green, HIGH);
-    pIO->digitalWrite(led.blue, LOW);
+    pIO->breathe(pin, 1000, 500, 500, 250, 0);
+    //pIO->setupBlink(pin, );
 }
-void ScannerController::turnOnYellow(RGB led)
+void ScannerController::stopBreathingLED(RGB led)
 {
-    pIO->digitalWrite(led.red, LOW);
-    pIO->digitalWrite(led.green, LOW);
-    pIO->digitalWrite(led.blue, HIGH);
+    stopBreathing(led.red);
+    stopBreathing(led.green);
+    stopBreathing(led.blue);
 }
-void ScannerController::turnOnCyan(RGB led)
+void ScannerController::startBreathingLED(RGB led, LED_COLORS color)
 {
-    pIO->digitalWrite(led.red, HIGH);
-    pIO->digitalWrite(led.green, LOW);
-    pIO->digitalWrite(led.blue, LOW);
+    switch (color)
+    {
+    case LED_COLORS::RED:
+        startBreathing(led.red);
+        stopBreathing(led.green);
+        stopBreathing(led.blue);
+        break;
+    case LED_COLORS::GREEN:
+        stopBreathing(led.red);
+        startBreathing(led.green);
+        stopBreathing(led.blue);
+        break;
+    case LED_COLORS::BLUE:
+        stopBreathing(led.red);
+        stopBreathing(led.green);
+        startBreathing(led.blue);
+        break;
+    case LED_COLORS::YELLOW:
+        startBreathing(led.red);
+        startBreathing(led.green);
+        stopBreathing(led.blue);
+        break;
+    case LED_COLORS::CYAN:
+        stopBreathing(led.red);
+        startBreathing(led.green);
+        startBreathing(led.blue);
+        break;
+    case LED_COLORS::MAGENTA:
+        startBreathing(led.red);
+        stopBreathing(led.green);
+        startBreathing(led.blue);
+        break;
+    case LED_COLORS::WHITE:
+        startBreathing(led.red);
+        startBreathing(led.green);
+        startBreathing(led.blue);
+        break;
+    default:
+        stopBreathingLED(led);
+        break;
+    }
 }
-void ScannerController::turnOnMagenta(RGB led)
+
+//display functions
+void ScannerController::setDisplayColor(LED_COLORS color)
 {
-    pIO->digitalWrite(led.red, LOW);
-    pIO->digitalWrite(led.green, HIGH);
-    pIO->digitalWrite(led.blue, LOW);
+    turnOnLED(LED_1, color);
+    turnOnLED(LED_2, color);
+    turnOnLED(LED_3, color);
+    turnOnLED(LED_4, color);
 }
-void ScannerController::turnOnWhite(RGB led)
+void ScannerController::blinkDisplay(LED_COLORS color, int count, int ton, int toff, LED_COLORS off_color)
 {
-    pIO->digitalWrite(led.red, LOW);
-    pIO->digitalWrite(led.green, LOW);
-    pIO->digitalWrite(led.blue, LOW);
+    for(int rep=0; rep < count; rep++)
+    {
+        //Turn on
+        turnOnLED(LED_1, color);
+        turnOnLED(LED_2, color);
+        turnOnLED(LED_3, color);
+        turnOnLED(LED_4, color);
+        delay(ton);
+
+        if(off_color == LED_COLORS::OFF)
+        {
+            //Turn Off
+            turnOffLED(LED_1);
+            turnOffLED(LED_2);
+            turnOffLED(LED_3);
+            turnOffLED(LED_4);
+        }
+        else {
+            //Set Off Color
+            turnOnLED(LED_1, off_color);
+            turnOnLED(LED_2, off_color);
+            turnOnLED(LED_3, off_color);
+            turnOnLED(LED_4, off_color);
+        }
+        delay(toff);
+    }
+}
+void ScannerController::breathDisplay(LED_COLORS bColor, LED_COLORS sColor)
+{
+    turnOnLED(LED_1, sColor);
+    startBreathingLED(LED_2, bColor);
+    turnOnLED(LED_3, sColor);
+    startBreathingLED(LED_4, bColor);
+}
+void ScannerController::clearDisplay(void)
+{
+    turnOffLED(LED_1);
+    turnOffLED(LED_2);
+    turnOffLED(LED_3);
+    turnOffLED(LED_4);
 }
 
 //=========================================================
@@ -185,106 +299,101 @@ void ScannerController::disableLightSensor(void)
 //=========================================================
 void ScannerController::scannerTest(void)
 {
-    pIO->digitalWrite(LED_1.red, HIGH);
-    pIO->digitalWrite(LED_1.green, HIGH);
-    pIO->digitalWrite(LED_1.blue, HIGH);
-    pIO->digitalWrite(LED_2.red, HIGH);
-    pIO->digitalWrite(LED_2.green, HIGH);
-    pIO->digitalWrite(LED_2.blue, HIGH);
-    pIO->digitalWrite(LED_3.red, HIGH);
-    pIO->digitalWrite(LED_3.green, HIGH);
-    pIO->digitalWrite(LED_3.blue, HIGH);
-    pIO->digitalWrite(LED_4.red, HIGH);
-    pIO->digitalWrite(LED_4.green, HIGH);
-    pIO->digitalWrite(LED_4.blue, HIGH);
-    
-    RGB test = LED_1;
-    //red
-    pIO->digitalWrite(test.red, LOW);
-    pIO->digitalWrite(test.green, HIGH);
-    pIO->digitalWrite(test.blue, HIGH);
-    delay(1000);
-    //green
-    pIO->digitalWrite(test.red, HIGH);
-    pIO->digitalWrite(test.green, LOW);
-    pIO->digitalWrite(test.blue, HIGH);
-    delay(1000);
-    //blue
-    pIO->digitalWrite(test.red, HIGH);
-    pIO->digitalWrite(test.green, HIGH);
-    pIO->digitalWrite(test.blue, LOW);
-    delay(1000);
-    
-    test = LED_2;
-    //red
-    pIO->digitalWrite(test.red, LOW);
-    pIO->digitalWrite(test.green, HIGH);
-    pIO->digitalWrite(test.blue, HIGH);
-    delay(1000);
-    //green
-    pIO->digitalWrite(test.red, HIGH);
-    pIO->digitalWrite(test.green, LOW);
-    pIO->digitalWrite(test.blue, HIGH);
-    delay(1000);
-    //blue
-    pIO->digitalWrite(test.red, HIGH);
-    pIO->digitalWrite(test.green, HIGH);
-    pIO->digitalWrite(test.blue, LOW);
-    delay(1000);
+    //Static Display Check
+    // setDisplayColor(LED_COLORS::RED);
+    // delay(500);
+    // setDisplayColor(LED_COLORS::GREEN);
+    // delay(500);
+    // setDisplayColor(LED_COLORS::BLUE);
+    // delay(500);
+    // setDisplayColor(LED_COLORS::YELLOW);
+    // delay(500);
+    // setDisplayColor(LED_COLORS::CYAN);
+    // delay(500);
+    // setDisplayColor(LED_COLORS::MAGENTA);
+    // delay(500);
+    // setDisplayColor(LED_COLORS::WHITE);
+    // delay(500);
+    // clearDisplay();
+    // delay(500);
 
-    test = LED_3;
-    //red
-    pIO->digitalWrite(test.red, LOW);
-    pIO->digitalWrite(test.green, HIGH);
-    pIO->digitalWrite(test.blue, HIGH);
-    delay(1000);
-    //green
-    pIO->digitalWrite(test.red, HIGH);
-    pIO->digitalWrite(test.green, LOW);
-    pIO->digitalWrite(test.blue, HIGH);
-    delay(1000);
-    //blue
-    pIO->digitalWrite(test.red, HIGH);
-    pIO->digitalWrite(test.green, HIGH);
-    pIO->digitalWrite(test.blue, LOW);
-    delay(1000);
+    //Blink Display Check
+    // blinkDisplay(LED_COLORS::RED, 3, 200, 100);
+    // delay(500);
+    // blinkDisplay(LED_COLORS::GREEN, 3, 200, 100);
+    // delay(500);
+    // blinkDisplay(LED_COLORS::BLUE, 3, 200, 100);
+    // delay(500);
+    // blinkDisplay(LED_COLORS::YELLOW, 3, 200, 100);
+    // delay(500);
+    // blinkDisplay(LED_COLORS::CYAN, 3, 200, 100);
+    // delay(500);
+    // blinkDisplay(LED_COLORS::MAGENTA, 3, 200, 100);
+    // delay(500);
+    // blinkDisplay(LED_COLORS::WHITE, 3, 200, 100);
+    // delay(500);
+    // blinkDisplay(LED_COLORS::BLUE, 3, 200, 100, LED_COLORS::YELLOW);
+    // delay(500);
+    // clearDisplay();
+    // delay(500);
 
-    test = LED_4;
-    //red
-    pIO->digitalWrite(test.red, LOW);
-    pIO->digitalWrite(test.green, HIGH);
-    pIO->digitalWrite(test.blue, HIGH);
-    delay(1000);
-    //green
-    pIO->digitalWrite(test.red, HIGH);
-    pIO->digitalWrite(test.green, LOW);
-    pIO->digitalWrite(test.blue, HIGH);
-    delay(1000);
-    //blue
-    pIO->digitalWrite(test.red, HIGH);
-    pIO->digitalWrite(test.green, HIGH);
-    pIO->digitalWrite(test.blue, LOW);
-    delay(1000);
+    //Breath Display Check
+    clearDisplay();
+    breathDisplay(LED_COLORS::RED, LED_COLORS::RED);
+    delay(5000);
+    clearDisplay();
+    breathDisplay(LED_COLORS::GREEN, LED_COLORS::GREEN);
+    delay(5000);
+    clearDisplay();
+    breathDisplay(LED_COLORS::BLUE, LED_COLORS::BLUE);
+    delay(5000);
+    clearDisplay();
+    breathDisplay(LED_COLORS::YELLOW, LED_COLORS::YELLOW);
+    delay(5000);
+    clearDisplay();
+    breathDisplay(LED_COLORS::CYAN, LED_COLORS::CYAN);
+    delay(5000);
+    clearDisplay();
+    breathDisplay(LED_COLORS::MAGENTA, LED_COLORS::MAGENTA);
+    delay(5000);
+    clearDisplay();
+    breathDisplay(LED_COLORS::WHITE, LED_COLORS::WHITE);
+    delay(5000);
+    clearDisplay();
+    breathDisplay(LED_COLORS::RED, LED_COLORS::GREEN);
+    delay(5000);
+    clearDisplay();
+    delay(2500);
 
-
-    //test light sensor
-    if(takeLightReading()) {
-        Serial.println("Sensor Reading: Hand on Scanner");
-    }
-    else {
-        Serial.println("Sensor Reading: Hand off Scanner");
-    }
+    //setDisplayColor(LED_COLORS::WHITE);
 }
 
 void ScannerController::lightSensorTest(void)
 {
-
+    //test light sensor
+    if(takeLightReading()) {
+        Serial.println("Sensor Reading: Hand on Scanner");
+        animationReady();
+    }
+    else {
+        Serial.println("Sensor Reading: Hand off Scanner");
+        clearDisplay();
+    }
 }
 
 //=========================================================
 //- animation Functions
 //-  animations for scanner leds
 //=========================================================
+void ScannerController::animationIdle(void)
+{
+    breathDisplay(LED_COLORS::WHITE, LED_COLORS::WHITE);
+}
+void ScannerController::animationReady(void)
+{
+    clearDisplay();
+    setDisplayColor(LED_COLORS::CYAN);
+}
 void ScannerController::animationScanning(void)
 {}
 void ScannerController::animationValidated(void)
@@ -295,10 +404,11 @@ void ScannerController::animationSensorOff(void)
 {}
 void ScannerController::animationXmas(void)
 {
-    turnOnGreen(LED_1);
-    turnOnRed(LED_2);
-    turnOnRed(LED_3);
-    turnOnGreen(LED_4);
+    clearDisplay();
+    breathDisplay(LED_COLORS::RED, LED_COLORS::GREEN);
 }
 void ScannerController::animationOrder66(void)
-{}
+{
+    clearDisplay();
+    breathDisplay(LED_COLORS::RED, LED_COLORS::RED);
+}

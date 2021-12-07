@@ -35,13 +35,13 @@ const byte SCANNER_ADDRESS = 0x3F;  // SX1509 I2C address (00)
 #define SC_LED_2_GREEN 6
 #define SC_LED_2_BLUE  7
 // LED 3 - LLC
-#define SC_LED_3_RED   15
-#define SC_LED_3_GREEN 14
-#define SC_LED_3_BLUE  13
+#define SC_LED_3_RED   10
+#define SC_LED_3_GREEN 9
+#define SC_LED_3_BLUE  8
 // LED 4 - LRC
-#define SC_LED_4_RED   10
-#define SC_LED_4_GREEN 9
-#define SC_LED_4_BLUE  8
+#define SC_LED_4_RED   15
+#define SC_LED_4_GREEN 14
+#define SC_LED_4_BLUE  13
 
 #define LIGHT_SENSOR_PIN A0
 

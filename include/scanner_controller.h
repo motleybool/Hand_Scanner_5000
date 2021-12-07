@@ -11,7 +11,7 @@
 //LED driver snippet: https://gist.github.com/chadpaulson/1834442
 
 //Sensor Threashold
-#define SENSOR_THRESH 25
+#define SENSOR_THRESH 200
 
 //=========================================================
 //- Scanner Function
@@ -25,9 +25,10 @@ class ScannerController
     RGB LED_2;
     RGB LED_3;
     RGB LED_4;
-    int LIGHT_SENSOR;
+    enum LED_COLORS {RED, GREEN, BLUE, YELLOW, CYAN, MAGENTA, WHITE, OFF};
     
     // Light Sensor Settings
+    int LIGHT_SENSOR;
     bool use_light_sensor;
     int background_reading;
     int sesnor_threadhold;
@@ -42,15 +43,20 @@ class ScannerController
     //=========================================================
     //- RGB LED Convience Functions
     //=========================================================
+    void turnOff(int pin);
+    void turnOn(int pin);
     void turnOffLED(RGB led);
-    void turnOnRed(RGB led);
-    void turnOnGreen(RGB led);
-    void turnOnBlue(RGB led);
-    void turnOnYellow(RGB led);
-    void turnOnCyan(RGB led);
-    void turnOnMagenta(RGB led);
-    void turnOnWhite(RGB led);
-    
+    void turnOnLED(RGB led, LED_COLORS color);
+    //breathing functions
+    void startBreathing(int pin);
+    void stopBreathing(int pin);
+    void stopBreathingLED(RGB led);
+    void startBreathingLED(RGB led, LED_COLORS color);
+    //display functions
+    void setDisplayColor(LED_COLORS color);
+    void blinkDisplay(LED_COLORS color, int count, int ton, int toff, LED_COLORS off_color = LED_COLORS::OFF);
+    void breathDisplay(LED_COLORS bColor, LED_COLORS sColors);
+
   public:
     //=========================================================
     //- Constructor
@@ -78,12 +84,15 @@ class ScannerController
     //- animation Functions
     //-  animations for scanner leds
     //=========================================================
+    void animationIdle(void);
+    void animationReady(void);
     void animationScanning(void);
     void animationValidated(void);
     void animationInvalidated(void);
     void animationSensorOff(void);
     void animationXmas(void);
     void animationOrder66(void);
+    void clearDisplay(void);
 
 };
 

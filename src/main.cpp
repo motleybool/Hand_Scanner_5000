@@ -40,6 +40,7 @@ void system_test(void)
 
   //Scanner Test
   //scannerController->scannerTest();
+  scannerController->lightSensorTest();
 }
 
 //=========================================================
@@ -78,7 +79,7 @@ void loop()
   heartbeat();
 
   // run tests
-  //system_test();
+  system_test(); return;
 
   //Register Keystroke
   CODE_TYPE code = keypadController->registerKeypress();
@@ -98,28 +99,33 @@ void loop()
       scannerController->animationValidated();
       //soundController->playSoundFX(SoundController::SoundFX::Succeed);
       soundController->playSoundFX(SoundController::SoundFX::OneUp);
+      scannerController->clearDisplay();
       Serial.println("Success!");
       break;
     case CODE_TYPE::INVALID_CODE:
       scannerController->animationInvalidated();
       soundController->playSoundFX(SoundController::SoundFX::Failure);
+      scannerController->clearDisplay();
       Serial.println("Failure!");
       break;
     case CODE_TYPE::TURN_OFF_SENSOR:
       scannerController->disableLightSensor();
       scannerController->animationSensorOff();
       soundController->playSoundFX(SoundController::SoundFX::Coin);
+      scannerController->clearDisplay();
       //soundController->playSoundFX(SoundController::SoundFX::Fireball);
       Serial.println("Light Sensor Turned Off");
       break;
     case CODE_TYPE::XMAS_TIME:
       scannerController->animationXmas();
       soundController->playSong(SoundController::Song::Jinglebells);
+      scannerController->clearDisplay();
       Serial.println("Merry Christmas!!");
       break;
     case CODE_TYPE::ORDER_66:
       scannerController->animationOrder66();
       soundController->playSong(SoundController::Song::Imperial);
+      scannerController->clearDisplay();
       Serial.println("Death to the Jedi!");
       break;
     
