@@ -61,7 +61,29 @@ ScannerController::ScannerController(int gpio_exp_addr, int sensor_pin, int led_
     sesnor_threadhold = SENSOR_THRESH;
     background_reading = analogRead(LIGHT_SENSOR); //seed background value
 
+    resetController();
+
     Serial.println("Scanner Controller Initialized...");
+}
+void ScannerController::resetController(void)
+{
+    //Reset LEDs
+    pIO->digitalWrite(LED_1.red, HIGH);
+    pIO->digitalWrite(LED_1.green, HIGH);
+    pIO->digitalWrite(LED_1.blue, HIGH);
+    pIO->digitalWrite(LED_2.red, HIGH);
+    pIO->digitalWrite(LED_2.green, HIGH);
+    pIO->digitalWrite(LED_2.blue, HIGH);
+    pIO->digitalWrite(LED_3.red, HIGH);
+    pIO->digitalWrite(LED_3.green, HIGH);
+    pIO->digitalWrite(LED_3.blue, HIGH);
+    pIO->digitalWrite(LED_4.red, HIGH);
+    pIO->digitalWrite(LED_4.green, HIGH);
+    pIO->digitalWrite(LED_4.blue, HIGH);
+
+    //Reset Thresholds
+    sesnor_threadhold = SENSOR_THRESH;
+    background_reading = analogRead(LIGHT_SENSOR); //seed background value
 }
 
 //=========================================================

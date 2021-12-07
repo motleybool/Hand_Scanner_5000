@@ -47,6 +47,7 @@ class ScannerController
                                                          int led_2_red, int led_2_green, int led_2_blue,
                                                          int led_3_red, int led_3_green, int led_3_blue,
                                                          int led_4_red, int led_4_green, int led_4_blue);
+    void resetController(void);
 
     //=========================================================
     //- scannerTest Function
