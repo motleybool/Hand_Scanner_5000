@@ -39,8 +39,7 @@ void system_test(void)
   //keypadController->keypadTest();
 
   //Scanner Test
-  scannerController->scannerTest();
-
+  //scannerController->scannerTest();
 }
 
 //=========================================================
@@ -67,16 +66,6 @@ void setup()
                                                                                SC_LED_2_RED, SC_LED_2_GREEN, SC_LED_2_BLUE,
                                                                                SC_LED_3_RED, SC_LED_3_GREEN, SC_LED_3_BLUE,
                                                                                SC_LED_4_RED, SC_LED_4_GREEN, SC_LED_4_BLUE);
-
-  //configure heartbeat LED
-  // configureLED(ONBOARD_LED);
-
-  //temp setup of rgb
-  // configureLED(RED_LED);
-  // configureLED(GREEN_LED);
-  // configureLED(BLUE_LED);
-  
-  //configureLED(test_led);
 }
 
 //=========================================================
@@ -93,36 +82,5 @@ void loop()
 
 
 
-  //turnOnLED(test_led);
-
-  // turnOffLED(GREEN_LED);
-  // turnOffLED(BLUE_LED);
-  // turnOffLED(RED_LED);
-  // //delay(500);
   
-  // turnOnLED(RED_LED);
-  // turnOnLED(BLUE_LED);
-  // delay(500);  
-
-  // turnOffLED(GREEN_LED);
-  // turnOffLED(BLUE_LED);
-  // turnOffLED(RED_LED);
-  // //delay(500);
-  
-  // turnOnLED(RED_LED);
-  // turnOnLED(GREEN_LED);
-  // delay(500);  
-
-  // turnOffLED(GREEN_LED);
-  // turnOffLED(BLUE_LED);
-  // turnOffLED(RED_LED);
-  // //delay(500);
-  
-  // turnOnLED(GREEN_LED);
-  // turnOnLED(BLUE_LED);
-  // delay(500);  
-
-  // Serial.println("Test Console");
-  
-  // lightReading();
 }
