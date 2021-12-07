@@ -47,6 +47,8 @@ KeypadController::KeypadController(int gpio_exp_addr, int led_1_pin, int led_2_p
 
   // Initialize Keypad
   pIO->keypad(KEY_ROWS, KEY_COLS, sleepTime, scanTime, debounceTime);
+
+  Serial.println("Keypad Controller Initialized...");
 }
 
 //=========================================================

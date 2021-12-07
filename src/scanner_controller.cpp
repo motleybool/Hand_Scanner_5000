@@ -61,7 +61,7 @@ ScannerController::ScannerController(int gpio_exp_addr, int sensor_pin, int led_
     sesnor_threadhold = SENSOR_THRESH;
     background_reading = analogRead(LIGHT_SENSOR); //seed background value
 
-
+    Serial.println("Scanner Controller Initialized...");
 }
 
 //=========================================================
@@ -96,37 +96,87 @@ bool ScannerController::takeLightReading(void)
 //=========================================================
 void ScannerController::scannerTest(void)
 {
-    //Breath LEDs through a color sequence
-    //-red
-    pIO->breathe(LED_1.red, 1000, 500, 500, 250);
-    pIO->breathe(LED_2.red, 1000, 500, 500, 250);
-    pIO->breathe(LED_3.red, 1000, 500, 500, 250);
-    pIO->breathe(LED_4.red, 1000, 500, 500, 250);
-    delay(5000);
     pIO->digitalWrite(LED_1.red, HIGH);
-    pIO->digitalWrite(LED_2.red, HIGH);
-    pIO->digitalWrite(LED_3.red, HIGH);
-    pIO->digitalWrite(LED_4.red, HIGH);
-    //-green
-    pIO->breathe(LED_1.green, 1000, 500, 500, 250);
-    pIO->breathe(LED_2.green, 1000, 500, 500, 250);
-    pIO->breathe(LED_3.green, 1000, 500, 500, 250);
-    pIO->breathe(LED_4.green, 1000, 500, 500, 250);
-    delay(5000);
     pIO->digitalWrite(LED_1.green, HIGH);
-    pIO->digitalWrite(LED_2.green, HIGH);
-    pIO->digitalWrite(LED_3.green, HIGH);
-    pIO->digitalWrite(LED_4.green, HIGH);
-    //-blue
-    pIO->breathe(LED_1.blue, 1000, 500, 500, 250);
-    pIO->breathe(LED_2.blue, 1000, 500, 500, 250);
-    pIO->breathe(LED_3.blue, 1000, 500, 500, 250);
-    pIO->breathe(LED_4.blue, 1000, 500, 500, 250);
-    delay(5000);
     pIO->digitalWrite(LED_1.blue, HIGH);
+    pIO->digitalWrite(LED_2.red, HIGH);
+    pIO->digitalWrite(LED_2.green, HIGH);
     pIO->digitalWrite(LED_2.blue, HIGH);
+    pIO->digitalWrite(LED_3.red, HIGH);
+    pIO->digitalWrite(LED_3.green, HIGH);
     pIO->digitalWrite(LED_3.blue, HIGH);
+    pIO->digitalWrite(LED_4.red, HIGH);
+    pIO->digitalWrite(LED_4.green, HIGH);
     pIO->digitalWrite(LED_4.blue, HIGH);
+    
+    RGB test = LED_1;
+    //red
+    pIO->digitalWrite(test.red, LOW);
+    pIO->digitalWrite(test.green, HIGH);
+    pIO->digitalWrite(test.blue, HIGH);
+    delay(1000);
+    //green
+    pIO->digitalWrite(test.red, HIGH);
+    pIO->digitalWrite(test.green, LOW);
+    pIO->digitalWrite(test.blue, HIGH);
+    delay(1000);
+    //blue
+    pIO->digitalWrite(test.red, HIGH);
+    pIO->digitalWrite(test.green, HIGH);
+    pIO->digitalWrite(test.blue, LOW);
+    delay(1000);
+    
+    test = LED_2;
+    //red
+    pIO->digitalWrite(test.red, LOW);
+    pIO->digitalWrite(test.green, HIGH);
+    pIO->digitalWrite(test.blue, HIGH);
+    delay(1000);
+    //green
+    pIO->digitalWrite(test.red, HIGH);
+    pIO->digitalWrite(test.green, LOW);
+    pIO->digitalWrite(test.blue, HIGH);
+    delay(1000);
+    //blue
+    pIO->digitalWrite(test.red, HIGH);
+    pIO->digitalWrite(test.green, HIGH);
+    pIO->digitalWrite(test.blue, LOW);
+    delay(1000);
+
+    test = LED_3;
+    //red
+    pIO->digitalWrite(test.red, LOW);
+    pIO->digitalWrite(test.green, HIGH);
+    pIO->digitalWrite(test.blue, HIGH);
+    delay(1000);
+    //green
+    pIO->digitalWrite(test.red, HIGH);
+    pIO->digitalWrite(test.green, LOW);
+    pIO->digitalWrite(test.blue, HIGH);
+    delay(1000);
+    //blue
+    pIO->digitalWrite(test.red, HIGH);
+    pIO->digitalWrite(test.green, HIGH);
+    pIO->digitalWrite(test.blue, LOW);
+    delay(1000);
+
+    test = LED_4;
+    //red
+    pIO->digitalWrite(test.red, LOW);
+    pIO->digitalWrite(test.green, HIGH);
+    pIO->digitalWrite(test.blue, HIGH);
+    delay(1000);
+    //green
+    pIO->digitalWrite(test.red, HIGH);
+    pIO->digitalWrite(test.green, LOW);
+    pIO->digitalWrite(test.blue, HIGH);
+    delay(1000);
+    //blue
+    pIO->digitalWrite(test.red, HIGH);
+    pIO->digitalWrite(test.green, HIGH);
+    pIO->digitalWrite(test.blue, LOW);
+    delay(1000);
+
 
     //test light sensor
     if(takeLightReading()) {

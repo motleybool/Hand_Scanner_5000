@@ -10,7 +10,7 @@
 #include "scanner_controller.h"
 #include "keypad_controller.h"
 
-#define test_led D6
+//#define test_led D6
 
 //Controller objects
 SoundController* soundController;
@@ -53,6 +53,9 @@ void setup()
   Serial.begin(115200);
   Serial.setDebugOutput(true);
 
+  //wait to connect serial monitor
+  delay(5000);
+
   //setup sound controller
   soundController = new SoundController(BUZZER_PIN);
 
@@ -60,10 +63,10 @@ void setup()
   keypadController = new KeypadController(KEYPAD_ADDRESS, KEYPAD_LED_1, KEYPAD_LED_2, KEYPAD_LED_3, KEYPAD_INT_PIN);
 
   //setup scanner controller
-  // scannerController = new ScannerController(SCANNER_ADDRESS, LIGHT_SENSOR_PIN, SC_LED_1_RED, SC_LED_1_GREEN, SC_LED_1_BLUE,
-  //                                                                              SC_LED_2_RED, SC_LED_2_GREEN, SC_LED_2_BLUE,
-  //                                                                              SC_LED_3_RED, SC_LED_3_GREEN, SC_LED_3_BLUE,
-  //                                                                              SC_LED_4_RED, SC_LED_4_GREEN, SC_LED_4_BLUE);
+  scannerController = new ScannerController(SCANNER_ADDRESS, LIGHT_SENSOR_PIN, SC_LED_1_RED, SC_LED_1_GREEN, SC_LED_1_BLUE,
+                                                                               SC_LED_2_RED, SC_LED_2_GREEN, SC_LED_2_BLUE,
+                                                                               SC_LED_3_RED, SC_LED_3_GREEN, SC_LED_3_BLUE,
+                                                                               SC_LED_4_RED, SC_LED_4_GREEN, SC_LED_4_BLUE);
 
   //configure heartbeat LED
   // configureLED(ONBOARD_LED);
@@ -73,7 +76,7 @@ void setup()
   // configureLED(GREEN_LED);
   // configureLED(BLUE_LED);
   
-  configureLED(test_led);
+  //configureLED(test_led);
 }
 
 //=========================================================
@@ -90,7 +93,7 @@ void loop()
 
 
 
-  turnOnLED(test_led);
+  //turnOnLED(test_led);
 
   // turnOffLED(GREEN_LED);
   // turnOffLED(BLUE_LED);
