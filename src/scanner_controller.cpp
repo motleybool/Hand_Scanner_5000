@@ -26,37 +26,38 @@ ScannerController::ScannerController(int gpio_exp_addr, int sensor_pin, int led_
 
     //setup rbg led 1
     LED_1.red = led_1_red;
-    pIO->pinMode(LED_1.red, ANALOG_OUTPUT);
+    pIO->pinMode(LED_1.red, OUTPUT);
     LED_1.green = led_1_green;
-    pIO->pinMode(LED_1.green, ANALOG_OUTPUT);
+    pIO->pinMode(LED_1.green, OUTPUT);
     LED_1.blue = led_1_blue;
-    pIO->pinMode(LED_1.blue, ANALOG_OUTPUT);
+    pIO->pinMode(LED_1.blue, OUTPUT);
 
     //setup rbg led 2
     LED_2.red = led_2_red;
-    pIO->pinMode(LED_2.red, ANALOG_OUTPUT);
+    pIO->pinMode(LED_2.red, OUTPUT);
     LED_2.green = led_2_green;
-    pIO->pinMode(LED_2.green, ANALOG_OUTPUT);
+    pIO->pinMode(LED_2.green, OUTPUT);
     LED_2.blue = led_2_blue;
-    pIO->pinMode(LED_2.blue, ANALOG_OUTPUT);
+    pIO->pinMode(LED_2.blue, OUTPUT);
     
     //setup rbg led 3
     LED_3.red = led_3_red;
-    pIO->pinMode(LED_3.red, ANALOG_OUTPUT);
+    pIO->pinMode(LED_3.red, OUTPUT);
     LED_3.green = led_3_green;
-    pIO->pinMode(LED_3.green, ANALOG_OUTPUT);
+    pIO->pinMode(LED_3.green, OUTPUT);
     LED_3.blue = led_3_blue;
-    pIO->pinMode(LED_3.blue, ANALOG_OUTPUT);
+    pIO->pinMode(LED_3.blue, OUTPUT);
 
     //setup rbg led 4
     LED_4.red = led_4_red;
-    pIO->pinMode(LED_4.red, ANALOG_OUTPUT);
+    pIO->pinMode(LED_4.red, OUTPUT);
     LED_4.green = led_4_green;
-    pIO->pinMode(LED_4.green, ANALOG_OUTPUT);
+    pIO->pinMode(LED_4.green, OUTPUT);
     LED_4.blue = led_4_blue;
-    pIO->pinMode(LED_4.blue, ANALOG_OUTPUT);
+    pIO->pinMode(LED_4.blue, OUTPUT);
 
     //setup light sensor pin
+    use_light_sensor = true;
     LIGHT_SENSOR = sensor_pin;
     sesnor_threadhold = SENSOR_THRESH;
     background_reading = analogRead(LIGHT_SENSOR); //seed background value
@@ -68,18 +69,22 @@ ScannerController::ScannerController(int gpio_exp_addr, int sensor_pin, int led_
 void ScannerController::resetController(void)
 {
     //Reset LEDs
-    pIO->digitalWrite(LED_1.red, HIGH);
-    pIO->digitalWrite(LED_1.green, HIGH);
-    pIO->digitalWrite(LED_1.blue, HIGH);
-    pIO->digitalWrite(LED_2.red, HIGH);
-    pIO->digitalWrite(LED_2.green, HIGH);
-    pIO->digitalWrite(LED_2.blue, HIGH);
-    pIO->digitalWrite(LED_3.red, HIGH);
-    pIO->digitalWrite(LED_3.green, HIGH);
-    pIO->digitalWrite(LED_3.blue, HIGH);
-    pIO->digitalWrite(LED_4.red, HIGH);
-    pIO->digitalWrite(LED_4.green, HIGH);
-    pIO->digitalWrite(LED_4.blue, HIGH);
+    // pIO->digitalWrite(LED_1.red, HIGH);
+    // pIO->digitalWrite(LED_1.green, HIGH);
+    // pIO->digitalWrite(LED_1.blue, HIGH);
+    // pIO->digitalWrite(LED_2.red, HIGH);
+    // pIO->digitalWrite(LED_2.green, HIGH);
+    // pIO->digitalWrite(LED_2.blue, HIGH);
+    // pIO->digitalWrite(LED_3.red, HIGH);
+    // pIO->digitalWrite(LED_3.green, HIGH);
+    // pIO->digitalWrite(LED_3.blue, HIGH);
+    // pIO->digitalWrite(LED_4.red, HIGH);
+    // pIO->digitalWrite(LED_4.green, HIGH);
+    // pIO->digitalWrite(LED_4.blue, HIGH);
+    turnOffLED(LED_1);
+    turnOffLED(LED_2);
+    turnOffLED(LED_3);
+    turnOffLED(LED_4);
 
     //Reset Thresholds
     sesnor_threadhold = SENSOR_THRESH;
@@ -111,6 +116,68 @@ bool ScannerController::takeLightReading(void)
 
     return false;
 }
+
+//=========================================================
+//- RGB LED Convience Functions
+//=========================================================
+void ScannerController::turnOffLED(RGB led)
+{
+    pIO->digitalWrite(led.red, HIGH);
+    pIO->digitalWrite(led.green, HIGH);
+    pIO->digitalWrite(led.blue, HIGH);
+}
+void ScannerController::turnOnRed(RGB led)
+{
+    pIO->digitalWrite(led.red, LOW);
+    pIO->digitalWrite(led.green, HIGH);
+    pIO->digitalWrite(led.blue, HIGH);
+}
+void ScannerController::turnOnGreen(RGB led)
+{
+    pIO->digitalWrite(led.red, HIGH);
+    pIO->digitalWrite(led.green, LOW);
+    pIO->digitalWrite(led.blue, HIGH);
+}
+void ScannerController::turnOnBlue(RGB led)
+{
+    pIO->digitalWrite(led.red, HIGH);
+    pIO->digitalWrite(led.green, HIGH);
+    pIO->digitalWrite(led.blue, LOW);
+}
+void ScannerController::turnOnYellow(RGB led)
+{
+    pIO->digitalWrite(led.red, LOW);
+    pIO->digitalWrite(led.green, LOW);
+    pIO->digitalWrite(led.blue, HIGH);
+}
+void ScannerController::turnOnCyan(RGB led)
+{
+    pIO->digitalWrite(led.red, HIGH);
+    pIO->digitalWrite(led.green, LOW);
+    pIO->digitalWrite(led.blue, LOW);
+}
+void ScannerController::turnOnMagenta(RGB led)
+{
+    pIO->digitalWrite(led.red, LOW);
+    pIO->digitalWrite(led.green, HIGH);
+    pIO->digitalWrite(led.blue, LOW);
+}
+void ScannerController::turnOnWhite(RGB led)
+{
+    pIO->digitalWrite(led.red, LOW);
+    pIO->digitalWrite(led.green, LOW);
+    pIO->digitalWrite(led.blue, LOW);
+}
+
+//=========================================================
+//- disableLightSensor Function
+//-  turns off usage of the light sensor
+//=========================================================
+void ScannerController::disableLightSensor(void)
+{
+    use_light_sensor = false;
+}
+
 
 //=========================================================
 //- scannerTest Function
@@ -213,3 +280,25 @@ void ScannerController::lightSensorTest(void)
 {
 
 }
+
+//=========================================================
+//- animation Functions
+//-  animations for scanner leds
+//=========================================================
+void ScannerController::animationScanning(void)
+{}
+void ScannerController::animationValidated(void)
+{}
+void ScannerController::animationInvalidated(void)
+{}
+void ScannerController::animationSensorOff(void)
+{}
+void ScannerController::animationXmas(void)
+{
+    turnOnGreen(LED_1);
+    turnOnRed(LED_2);
+    turnOnRed(LED_3);
+    turnOnGreen(LED_4);
+}
+void ScannerController::animationOrder66(void)
+{}

@@ -28,6 +28,7 @@ class ScannerController
     int LIGHT_SENSOR;
     
     // Light Sensor Settings
+    bool use_light_sensor;
     int background_reading;
     int sesnor_threadhold;
 
@@ -38,6 +39,17 @@ class ScannerController
     //=========================================================
     bool takeLightReading(void);
 
+    //=========================================================
+    //- RGB LED Convience Functions
+    //=========================================================
+    void turnOffLED(RGB led);
+    void turnOnRed(RGB led);
+    void turnOnGreen(RGB led);
+    void turnOnBlue(RGB led);
+    void turnOnYellow(RGB led);
+    void turnOnCyan(RGB led);
+    void turnOnMagenta(RGB led);
+    void turnOnWhite(RGB led);
     
   public:
     //=========================================================
@@ -50,12 +62,28 @@ class ScannerController
     void resetController(void);
 
     //=========================================================
+    //- disableLightSensor Function
+    //-  turns off usage of the light sensor
+    //=========================================================
+    void disableLightSensor(void);
+
+    //=========================================================
     //- scannerTest Function
     //-  tests the scanner functionality
     //=========================================================
     void scannerTest(void);
     void lightSensorTest(void);
 
+    //=========================================================
+    //- animation Functions
+    //-  animations for scanner leds
+    //=========================================================
+    void animationScanning(void);
+    void animationValidated(void);
+    void animationInvalidated(void);
+    void animationSensorOff(void);
+    void animationXmas(void);
+    void animationOrder66(void);
 
 };
 

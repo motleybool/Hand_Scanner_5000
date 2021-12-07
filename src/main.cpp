@@ -95,25 +95,25 @@ void loop()
     switch (code)
     {
     case CODE_TYPE::VALID_CODE:
-      //success animation
+      scannerController->animationValidated();
       Serial.println("Success!");
       break;
     case CODE_TYPE::INVALID_CODE:
-      //failure animation
+      scannerController->animationInvalidated();
       Serial.println("Failure!");
       break;
     case CODE_TYPE::TURN_OFF_SENSOR:
-      //disable light sensor in scanner controller
-      //confirmation animation
+      scannerController->disableLightSensor();
+      scannerController->animationSensorOff();
       Serial.println("Light Sensor Turned Off");
       break;
     case CODE_TYPE::XMAS_TIME:
-      //xmas animation on/off
+      scannerController->animationXmas();
       soundController->playSong(SoundController::Song::Jinglebells);
       Serial.println("Merry Christmas!!");
       break;
     case CODE_TYPE::ORDER_66:
-      //all red animation on/off
+      scannerController->animationOrder66();
       soundController->playSong(SoundController::Song::Imperial);
       Serial.println("Death to the Jedi!");
       break;
@@ -124,8 +124,9 @@ void loop()
       break;
     }
 
-    //reset controller
+    //reset controllers
     keypadController->resetController();
+    scannerController->resetController();
   }
   
 }
