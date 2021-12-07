@@ -46,6 +46,30 @@ const byte SCANNER_ADDRESS = 0x3F;  // SX1509 I2C address (00)
 #define LIGHT_SENSOR_PIN A0
 
 //=========================================================
+//- Codes
+//=========================================================
+//- Imperial March *-6-6
+#define IM_1 55
+#define IM_2 6
+#define IM_3 6
+//- XMas *-2-5
+#define XMas_1 55
+#define XMas_2 2
+#define XMas_3 5
+//- Light Sensor Off *-9-9
+#define SOFF_1 55
+#define SOFF_2 9
+#define SOFF_3 9
+//- Valid Florida 4-0-7
+#define FL_1 4
+#define FL_2 0
+#define FL_3 7
+//- Valid Maine 8-8-2
+#define Maine_1 8
+#define Maine_2 8
+#define Maine_3 2
+
+//=========================================================
 //- LED Common Functions
 //=========================================================
 

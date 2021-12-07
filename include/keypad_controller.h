@@ -12,6 +12,16 @@
 #define KEY_ROWS 4
 #define KEY_COLS 3
 
+//-Code Type
+enum CODE_TYPE {
+  CODE_IMPCOMPLETE,
+  VALID_CODE,
+  INVALID_CODE,
+  TURN_OFF_SENSOR,
+  XMAS_TIME,
+  ORDER_66
+};
+
 //=========================================================
 //- Keypad Function
 //-  Keypad controller class
@@ -28,6 +38,12 @@ class KeypadController
     byte scanTime;
     byte debounceTime;
 
+    //Key Code
+    struct KEY_CODE {
+      int code[3];
+      unsigned int index;
+    } key_code;
+
     // Handy array we'll use to map row/column pairs to 
     // character values:
     const char keyMap[KEY_ROWS][KEY_COLS] = {
@@ -40,13 +56,24 @@ class KeypadController
                                             {4, 5, 6},
                                             {7, 8, 9},
                                             {55, 0, 99}};
-    
+    //=========================================================
+    //- LED Convience Functions
+    //=========================================================
+    void breathLED(int led);
+    void turnOnLED(int led);
+    void turnOffLED(int led);
+
+    //=========================================================
+    //- Evaluate Code Input
+    //=========================================================
+    CODE_TYPE evaluateCode(void);
     
   public:
     //=========================================================
     //- Constructor
     //=========================================================
     KeypadController(int gpio_exp_addr, int led_1_pin, int led_2_pin, int led_3_pin, int int_pin);
+    void resetController(void);
 
     //=========================================================
     //- keypadTest Function
@@ -65,7 +92,7 @@ class KeypadController
     //-  checks for and fetches key value
     //-  returns true if sequence is complete
     //=========================================================
-    bool registerKeypress(void);
+    CODE_TYPE registerKeypress(void);
 
 
 

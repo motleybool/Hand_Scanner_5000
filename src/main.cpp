@@ -78,9 +78,54 @@ void loop()
   heartbeat();
 
   // run tests
-  system_test();
+  //system_test();
 
+  //Register Keystroke
+  CODE_TYPE code = keypadController->registerKeypress();
 
+  //Check for Full Code
+  if(code != CODE_TYPE::CODE_IMPCOMPLETE)
+  {
+    //Start Scanning Animation
+    delay(2000);
 
+    //Check Light Sensor (if active)
+
+    //Interpret Code
+    switch (code)
+    {
+    case CODE_TYPE::VALID_CODE:
+      //success animation
+      Serial.println("Success!");
+      break;
+    case CODE_TYPE::INVALID_CODE:
+      //failure animation
+      Serial.println("Failure!");
+      break;
+    case CODE_TYPE::TURN_OFF_SENSOR:
+      //disable light sensor in scanner controller
+      //confirmation animation
+      Serial.println("Light Sensor Turned Off");
+      break;
+    case CODE_TYPE::XMAS_TIME:
+      //xmas animation on/off
+      soundController->playSong(SoundController::Song::Jinglebells);
+      Serial.println("Merry Christmas!!");
+      break;
+    case CODE_TYPE::ORDER_66:
+      //all red animation on/off
+      soundController->playSong(SoundController::Song::Imperial);
+      Serial.println("Death to the Jedi!");
+      break;
+    
+    default:
+      //failure animation
+      Serial.println("Failure!");
+      break;
+    }
+
+    //reset controller
+    keypadController->resetController();
+  }
   
 }
