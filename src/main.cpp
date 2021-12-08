@@ -40,7 +40,7 @@ void system_test(void)
 
   //Scanner Test
   //scannerController->scannerTest();
-  scannerController->lightSensorTest();
+  //scannerController->lightSensorTest();
 }
 
 //=========================================================
@@ -79,7 +79,17 @@ void loop()
   heartbeat();
 
   // run tests
-  system_test(); return;
+  //system_test(); return;
+
+  //Check for hand present
+  if(scannerController->isHandPresent()) {
+      //Serial.println("Sensor Reading: Hand on Scanner");
+      scannerController->animationReady();
+  }
+  else {
+      //Serial.println("Sensor Reading: Hand off Scanner");
+      scannerController->clearDisplay();
+  }
 
   //Register Keystroke
   CODE_TYPE code = keypadController->registerKeypress();
@@ -88,32 +98,42 @@ void loop()
   if(code != CODE_TYPE::CODE_IMPCOMPLETE)
   {
     //Start Scanning Animation
-    delay(1000);
+    scannerController->animationScanning();
+    scannerController->clearDisplay();
+    delay(500);
 
     //Check Light Sensor (if active)
+    //Make sure hand is still present
+    scannerController->clearHandPresent();
+    if(!scannerController->isHandPresent() &&
+       code != CODE_TYPE::TURN_OFF_SENSOR) {
+      //overwrite code
+      Serial.println("Failed second hand check");
+      code = CODE_TYPE::INVALID_CODE;
+    }
 
     //Interpret Code
     switch (code)
     {
     case CODE_TYPE::VALID_CODE:
       scannerController->animationValidated();
-      //soundController->playSoundFX(SoundController::SoundFX::Succeed);
       soundController->playSoundFX(SoundController::SoundFX::OneUp);
+      delay(1500);
       scannerController->clearDisplay();
       Serial.println("Success!");
       break;
     case CODE_TYPE::INVALID_CODE:
       scannerController->animationInvalidated();
       soundController->playSoundFX(SoundController::SoundFX::Failure);
+      delay(1500);
       scannerController->clearDisplay();
       Serial.println("Failure!");
       break;
     case CODE_TYPE::TURN_OFF_SENSOR:
-      scannerController->disableLightSensor();
+      scannerController->toggleLightSensor();
       scannerController->animationSensorOff();
       soundController->playSoundFX(SoundController::SoundFX::Coin);
       scannerController->clearDisplay();
-      //soundController->playSoundFX(SoundController::SoundFX::Fireball);
       Serial.println("Light Sensor Turned Off");
       break;
     case CODE_TYPE::XMAS_TIME:

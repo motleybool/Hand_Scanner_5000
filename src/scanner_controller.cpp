@@ -58,10 +58,11 @@ ScannerController::ScannerController(int gpio_exp_addr, int sensor_pin, int led_
     pIO->pinMode(LED_4.blue, PIN_MODE);
 
     //setup light sensor pin
-    use_light_sensor = true;
+    bypass_sensor = false;
+    hand_present = false;
     LIGHT_SENSOR = sensor_pin;
     sesnor_threadhold = SENSOR_THRESH;
-    background_reading = analogRead(LIGHT_SENSOR); //seed background value
+    delay(500);
 
     resetController();
 
@@ -69,14 +70,12 @@ ScannerController::ScannerController(int gpio_exp_addr, int sensor_pin, int led_
 }
 void ScannerController::resetController(void)
 {
-    //Reset LEDs
-    turnOffLED(LED_1);
-    turnOffLED(LED_2);
-    turnOffLED(LED_3);
-    turnOffLED(LED_4);
+    //clear display
+    clearDisplay();
 
     //Reset Thresholds
     sesnor_threadhold = SENSOR_THRESH;
+    hand_present = false;
     background_reading = analogRead(LIGHT_SENSOR); //seed background value
 }
 
@@ -90,12 +89,18 @@ bool ScannerController::takeLightReading(void)
     //take light reading
     int lightvalue = 0;
     lightvalue = analogRead(LIGHT_SENSOR);
-    Serial.printf("Light Sesnsor: %d\n", lightvalue);
-    Serial.printf("Background Value: %d\n", background_reading);
+    Serial.printf("Light Sesnsor: %d, Background Value: %d\n", lightvalue, background_reading);
 
-    //is this below threhold
-    if(background_reading - lightvalue > sesnor_threadhold )
+    //if bypass set return true
+    if(bypass_sensor)
     {
+        Serial.println("Sensor Bypass...");
+        return true;
+    }
+    //is this below threhold
+    else if(background_reading - lightvalue > sesnor_threadhold )
+    {
+        hand_present = true;
         return true;
     }
     // otherwise update background
@@ -284,14 +289,38 @@ void ScannerController::clearDisplay(void)
 }
 
 //=========================================================
-//- disableLightSensor Function
+//- toggleLightSensor Function
 //-  turns off usage of the light sensor
 //=========================================================
-void ScannerController::disableLightSensor(void)
+void ScannerController::toggleLightSensor(void)
 {
-    use_light_sensor = false;
+    bypass_sensor = !bypass_sensor;
 }
 
+//=========================================================
+//- Hand Present Functions
+//-  checks for hand on scanner
+//=========================================================
+bool ScannerController::isHandPresent(void)
+{
+    //override if set
+    if(bypass_sensor) {
+        Serial.println("Hand Sensor Bypass...");
+        return true;
+    }
+    //else if hand already present
+    else if(hand_present) {
+        return hand_present;
+    }
+    //else take reading
+    else {
+        return takeLightReading();
+    }
+}
+void ScannerController::clearHandPresent(void)
+{
+    hand_present = false;
+}
 
 //=========================================================
 //- scannerTest Function
@@ -391,24 +420,69 @@ void ScannerController::animationIdle(void)
 }
 void ScannerController::animationReady(void)
 {
-    clearDisplay();
     setDisplayColor(LED_COLORS::CYAN);
 }
 void ScannerController::animationScanning(void)
-{}
+{
+    int step = 75;
+    clearDisplay();
+
+    setDisplayColor(LED_COLORS::CYAN);
+    for(int i=0; i<4; i++)
+    {
+        turnOnLED(LED_1, LED_COLORS::BLUE);
+        delay(step);
+        turnOnLED(LED_2, LED_COLORS::BLUE);
+        delay(step);
+        turnOnLED(LED_3, LED_COLORS::BLUE);
+        delay(step);
+        turnOnLED(LED_4, LED_COLORS::BLUE);
+        delay(step);
+        turnOnLED(LED_1, LED_COLORS::MAGENTA);
+        delay(step);
+        turnOnLED(LED_2, LED_COLORS::MAGENTA);
+        delay(step);
+        turnOnLED(LED_3, LED_COLORS::MAGENTA);
+        delay(step);
+        turnOnLED(LED_4, LED_COLORS::MAGENTA);
+        delay(step);
+        turnOnLED(LED_1, LED_COLORS::YELLOW);
+        delay(step);
+        turnOnLED(LED_2, LED_COLORS::YELLOW);
+        delay(step);
+        turnOnLED(LED_3, LED_COLORS::YELLOW);
+        delay(step);
+        turnOnLED(LED_4, LED_COLORS::YELLOW);
+        delay(step);
+    }
+}
 void ScannerController::animationValidated(void)
-{}
+{
+    blinkDisplay(LED_COLORS::GREEN, 2, 200, 100);
+    setDisplayColor(LED_COLORS::GREEN);
+}
 void ScannerController::animationInvalidated(void)
-{}
+{
+    blinkDisplay(LED_COLORS::RED, 2, 200, 100);
+    setDisplayColor(LED_COLORS::RED);
+}
 void ScannerController::animationSensorOff(void)
-{}
+{
+    blinkDisplay(LED_COLORS::YELLOW, 2, 200, 100);
+}
 void ScannerController::animationXmas(void)
 {
     clearDisplay();
-    breathDisplay(LED_COLORS::RED, LED_COLORS::GREEN);
+    //breathDisplay(LED_COLORS::RED, LED_COLORS::GREEN);
+    turnOnLED(LED_1, LED_COLORS::RED);
+    turnOnLED(LED_2, LED_COLORS::GREEN);
+    turnOnLED(LED_3, LED_COLORS::RED);
+    turnOnLED(LED_4, LED_COLORS::GREEN);
 }
 void ScannerController::animationOrder66(void)
 {
     clearDisplay();
-    breathDisplay(LED_COLORS::RED, LED_COLORS::RED);
+    //breathDisplay(LED_COLORS::RED, LED_COLORS::RED);
+    blinkDisplay(LED_COLORS::RED, 2, 100, 50);
+    setDisplayColor(LED_COLORS::RED);
 }

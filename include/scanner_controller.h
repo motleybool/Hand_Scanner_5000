@@ -29,7 +29,8 @@ class ScannerController
     
     // Light Sensor Settings
     int LIGHT_SENSOR;
-    bool use_light_sensor;
+    bool bypass_sensor;
+    bool hand_present;
     int background_reading;
     int sesnor_threadhold;
 
@@ -68,10 +69,17 @@ class ScannerController
     void resetController(void);
 
     //=========================================================
-    //- disableLightSensor Function
+    //- toggleLightSensor Function
     //-  turns off usage of the light sensor
     //=========================================================
-    void disableLightSensor(void);
+    void toggleLightSensor(void);
+
+    //=========================================================
+    //- Hand Present Functions
+    //-  checks for hand on scanner
+    //=========================================================
+    bool isHandPresent(void);
+    void clearHandPresent(void);
 
     //=========================================================
     //- scannerTest Function
