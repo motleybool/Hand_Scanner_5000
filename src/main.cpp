@@ -98,9 +98,12 @@ void loop()
   if(code != CODE_TYPE::CODE_IMPCOMPLETE)
   {
     //Start Scanning Animation
-    scannerController->animationScanning();
-    scannerController->clearDisplay();
-    delay(500);
+    if(code != CODE_TYPE::TURN_OFF_SENSOR)
+    {
+      scannerController->animationScanning();
+      scannerController->clearDisplay();
+      delay(200);
+    }
 
     //Check Light Sensor (if active)
     //Make sure hand is still present
