@@ -43,10 +43,10 @@ KeypadController::KeypadController(int gpio_exp_addr, int led_1_pin, int led_2_p
   unsigned int sleepTime = 0;
 
   // Scan time range: 1-128 ms, powers of 2
-  byte scanTime = 64; // Scan time per row, in ms
+  byte scanTime = 32; // Scan time per row, in ms
   
   // Debounce time range: 0.5 - 64 ms (powers of 2)
-  byte debounceTime = 32; // Debounce time
+  byte debounceTime = 16; // Debounce time
 
   // Initialize Keypad
   pIO->keypad(KEY_ROWS, KEY_COLS, sleepTime, scanTime, debounceTime);
@@ -197,6 +197,26 @@ CODE_TYPE KeypadController::evaluateCode(void)
     else if(key_code.code[0] == IM_1 && key_code.code[1] == IM_2 && key_code.code[2] == IM_3)
     {
       return CODE_TYPE::ORDER_66;
+    }
+    //Cannon Code
+    else if(key_code.code[0] == CAN_1 && key_code.code[1] == CAN_2 && key_code.code[2] == CAN_3)
+    {
+      return CODE_TYPE::CANNON;
+    }
+    //Mario Code
+    else if(key_code.code[0] == MAR_1 && key_code.code[1] == MAR_2 && key_code.code[2] == MAR_3)
+    {
+      return CODE_TYPE::MARIO;
+    }
+    //Lion Code
+    else if(key_code.code[0] == LION_1 && key_code.code[1] == LION_2 && key_code.code[2] == LION_3)
+    {
+      return CODE_TYPE::LION;
+    }
+    //Tetris Code
+    else if(key_code.code[0] == TET_1 && key_code.code[1] == TET_2 && key_code.code[2] == TET_3)
+    {
+      return CODE_TYPE::TETRIS;
     }
     else {
       return CODE_TYPE::INVALID_CODE;

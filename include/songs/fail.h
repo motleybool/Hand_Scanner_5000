@@ -21,7 +21,10 @@ namespace Failure
     // so -4 means a dotted quarter note, that is, a quarter plus an eighteenth!!
     int melody[] = {
 
-        NOTE_E5, 16, NOTE_D5, 16
+        //game over sound
+        NOTE_C5,-4, NOTE_G4,-4, NOTE_E4,4, //45
+        NOTE_A4,-8, NOTE_B4,-8, NOTE_A4,-8, NOTE_GS4,-8, NOTE_AS4,-8, NOTE_GS4,-8,
+        NOTE_G4,8, NOTE_D4,8, NOTE_E4,-2,  
 
     };
 }

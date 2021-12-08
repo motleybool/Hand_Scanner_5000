@@ -60,6 +60,22 @@ const byte SCANNER_ADDRESS = 0x3F;  // SX1509 I2C address (00)
 #define SOFF_1 55
 #define SOFF_2 9
 #define SOFF_3 9
+//- Cannon *-2-2
+#define CAN_1 55
+#define CAN_2 2
+#define CAN_3 2
+//- Mario *-5-5
+#define MAR_1 55
+#define MAR_2 5
+#define MAR_3 5
+//- Lion *-8-8
+#define LION_1 55
+#define LION_2 8
+#define LION_3 8
+//- Tetris *-1-1
+#define TET_1 55
+#define TET_2 1
+#define TET_3 1
 //- Valid Florida 4-0-7
 #define FL_1 4
 #define FL_2 0

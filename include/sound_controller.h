@@ -26,7 +26,7 @@ class SoundController
     SoundController(int buzzer_pin);
 
     //Songs
-    enum Song {Nokia, Starwars, Imperial, Jinglebells, Fail};
+    enum Song {Nokia, Starwars, Imperial, Jinglebells, Fail, Mario, Tetris, Cannon, Lion};
     enum SoundFX {Failure, Succeed, OneUp, Fireball, Coin};
 
     //=========================================================

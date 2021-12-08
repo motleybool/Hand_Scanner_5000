@@ -486,3 +486,32 @@ void ScannerController::animationOrder66(void)
     blinkDisplay(LED_COLORS::RED, 2, 100, 50);
     setDisplayColor(LED_COLORS::RED);
 }
+void ScannerController::animationCannon(void)
+{
+    clearDisplay();
+    setDisplayColor(LED_COLORS::CYAN);
+}
+void ScannerController::animationMario(void)
+{
+    clearDisplay();
+    turnOnLED(LED_1, LED_COLORS::RED);
+    turnOnLED(LED_2, LED_COLORS::BLUE);
+    turnOnLED(LED_3, LED_COLORS::RED);
+    turnOnLED(LED_4, LED_COLORS::BLUE);
+}
+void ScannerController::animationLion(void)
+{
+    clearDisplay();
+    turnOnLED(LED_1, LED_COLORS::YELLOW);
+    turnOnLED(LED_2, LED_COLORS::RED);
+    turnOnLED(LED_3, LED_COLORS::YELLOW);
+    turnOnLED(LED_4, LED_COLORS::RED);
+}
+void ScannerController::animationTetris(void)
+{
+    clearDisplay();
+    turnOnLED(LED_1, LED_COLORS::MAGENTA);
+    turnOnLED(LED_2, LED_COLORS::CYAN);
+    turnOnLED(LED_3, LED_COLORS::MAGENTA);
+    turnOnLED(LED_4, LED_COLORS::CYAN);
+}

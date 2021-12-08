@@ -12,6 +12,10 @@
 #include "songs/starwars_theme.h"
 #include "songs/jingle_bells.h"
 #include "songs/fail.h"
+#include "songs/cannon.h"
+#include "songs/lion.h"
+#include "songs/mario.h"
+#include "songs/tetris.h"
 
 //=========================================================
 //- Constructor
@@ -78,6 +82,39 @@ void SoundController::playSong(Song song)
     // this calculates the duration of a whole note in ms
     wholenote = (60000 * 4) / Failure::tempo;
     break;
+  case Song::Cannon:
+    pmelody = CannonD::melody;
+    // sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
+    // there are two values per note (pitch and duration), so for each note there are four bytes
+    notes = sizeof(CannonD::melody) / sizeof(CannonD::melody[0]) / 2;
+    // this calculates the duration of a whole note in ms
+    wholenote = (60000 * 4) / CannonD::tempo;
+    break;
+  case Song::Lion:
+    pmelody = LionSleeps::melody;
+    // sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
+    // there are two values per note (pitch and duration), so for each note there are four bytes
+    notes = sizeof(LionSleeps::melody) / sizeof(LionSleeps::melody[0]) / 2;
+    // this calculates the duration of a whole note in ms
+    wholenote = (60000 * 4) / LionSleeps::tempo;
+    break;
+  case Song::Mario:
+    pmelody = MarioTheme::melody;
+    // sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
+    // there are two values per note (pitch and duration), so for each note there are four bytes
+    notes = sizeof(MarioTheme::melody) / sizeof(MarioTheme::melody[0]) / 2;
+    // this calculates the duration of a whole note in ms
+    wholenote = (60000 * 4) / MarioTheme::tempo;
+    break;
+  case Song::Tetris:
+    pmelody = TetrisTheme::melody;
+    // sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
+    // there are two values per note (pitch and duration), so for each note there are four bytes
+    notes = sizeof(TetrisTheme::melody) / sizeof(TetrisTheme::melody[0]) / 2;
+    // this calculates the duration of a whole note in ms
+    wholenote = (60000 * 4) / TetrisTheme::tempo;
+    break; 
+
 
   //Default to failure tone
   default:

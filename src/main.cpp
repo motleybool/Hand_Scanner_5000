@@ -128,6 +128,7 @@ void loop()
     case CODE_TYPE::INVALID_CODE:
       scannerController->animationInvalidated();
       soundController->playSoundFX(SoundController::SoundFX::Failure);
+      //soundController->playSong(SoundController::Song::Fail);
       delay(1500);
       scannerController->clearDisplay();
       Serial.println("Failure!");
@@ -151,7 +152,31 @@ void loop()
       scannerController->clearDisplay();
       Serial.println("Death to the Jedi!");
       break;
-    
+    case CODE_TYPE::CANNON:
+      scannerController->animationCannon();
+      soundController->playSong(SoundController::Song::Cannon);
+      scannerController->clearDisplay();
+      Serial.println("Cannon in D");
+      break;
+    case CODE_TYPE::MARIO:
+      scannerController->animationMario();
+      soundController->playSong(SoundController::Song::Mario);
+      scannerController->clearDisplay();
+      Serial.println("Lets go Mario!");
+      break;
+    case CODE_TYPE::LION:
+      scannerController->animationLion();
+      soundController->playSong(SoundController::Song::Lion);
+      scannerController->clearDisplay();
+      Serial.println("Ahhhh-weeeeee!");
+      break;
+    case CODE_TYPE::TETRIS:
+      scannerController->animationTetris();
+      soundController->playSong(SoundController::Song::Tetris);
+      scannerController->clearDisplay();
+      Serial.println("Beep, boop, badooop....");
+      break;
+
     default:
       //failure animation
       Serial.println("Failure!");

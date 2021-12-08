@@ -19,7 +19,11 @@ enum CODE_TYPE {
   INVALID_CODE,
   TURN_OFF_SENSOR,
   XMAS_TIME,
-  ORDER_66
+  ORDER_66,
+  LION,
+  TETRIS,
+  CANNON,
+  MARIO,
 };
 
 //=========================================================
