@@ -18,6 +18,7 @@ enum CODE_TYPE {
   VALID_CODE,
   INVALID_CODE,
   TURN_OFF_SENSOR,
+  CALIBRATION,
   XMAS_TIME,
   ORDER_66,
   LION,
@@ -97,6 +98,7 @@ class KeypadController
     //-  returns true if sequence is complete
     //=========================================================
     CODE_TYPE registerKeypress(void);
+    bool getKeyStroke(int *key_value);
 
 
 

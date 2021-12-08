@@ -60,6 +60,10 @@ const byte SCANNER_ADDRESS = 0x3F;  // SX1509 I2C address (00)
 #define SOFF_1 55
 #define SOFF_2 9
 #define SOFF_3 9
+//- Calibration Mode *-#-*
+#define CAL_1 55
+#define CAL_2 99
+#define CAL_3 55
 //- Cannon *-2-2
 #define CAN_1 55
 #define CAN_2 2

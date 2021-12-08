@@ -129,6 +129,27 @@ void KeypadController::resetController(void)
 
     return CODE_TYPE::CODE_IMPCOMPLETE;
   }
+  bool KeypadController::getKeyStroke(int *key_value)
+  {
+    // If the interrupt pin goes active-low, a keypad button
+    // is begin pressed:
+    if (!digitalRead(INTERUPT))
+    {
+        // Use readKeypad() to get a binary representation for
+        // which row and column are pressed
+        unsigned int keyData = pIO->readKeypad();
+
+        // Use the getRow, and getCol helper functions to find
+        // which row and column keyData says are active.
+        byte row = pIO->getRow(keyData);
+        byte col = pIO->getCol(keyData);
+        char key = keyMap[row][col];
+        int val = keyValue[row][col];
+        *key_value = val;
+        return true;
+    }
+    return false;
+  }
 
 //=========================================================
 //- LED Convience Functions
@@ -187,6 +208,10 @@ CODE_TYPE KeypadController::evaluateCode(void)
     else if(key_code.code[0] == SOFF_1 && key_code.code[1] == SOFF_2 && key_code.code[2] == SOFF_3)
     {
       return CODE_TYPE::TURN_OFF_SENSOR;
+    }
+    else if(key_code.code[0] == CAL_1 && key_code.code[1] == CAL_2 && key_code.code[2] == CAL_3)
+    {
+      return CODE_TYPE::CALIBRATION;
     }
     //XMas Code
     else if(key_code.code[0] == XMas_1 && key_code.code[1] == XMas_2 && key_code.code[2] == XMas_3)

@@ -70,6 +70,82 @@ void setup()
 }
 
 //=========================================================
+//- Light Sensor Calibration
+//-  helper function to calibrate light sensor
+//=========================================================
+bool calibration = false;
+int temp_background = 0;
+int temp_hand = 0;
+int temp = 0;
+void runCalibrationMode(void)
+{
+  //enum CAL_STEPS {TAKE_BACKGROUND_READING, TAKE_HAND_READING, THRESHOLD_ADJUST};
+  //CAL_STEPS step = CAL_STEPS::TAKE_BACKGROUND_READING;
+  int key = -1;
+
+  //Only process if keystroke detected
+  if(keypadController->getKeyStroke(&key))
+  {
+    Serial.printf("Running Calibration... Key:%d\n", key);
+    switch (key)
+    {
+    case 0:
+      //Exit Mode
+      calibration = false;
+      temp_background = 0;
+      temp_hand = 0;
+      temp = 0;
+      Serial.println("Leaving Calibration...");
+      scannerController->animationCalibrationStep();
+      soundController->playSoundFX(SoundController::SoundFX::Fireball);
+      break;
+    case 55:
+      //Take Background
+      temp_background = scannerController->takeSensorSample();
+      Serial.printf("Running Calibration... Background:%d\n", temp_background);
+      scannerController->animationCalibrationStep();
+      soundController->playSoundFX(SoundController::SoundFX::Fireball);
+      break;
+    case 99:
+      //Take Hand
+      temp_hand = scannerController->takeSensorSample();
+      Serial.printf("Running Calibration... Hand:%d\n", temp_hand);
+      scannerController->animationCalibrationStep();
+      soundController->playSoundFX(SoundController::SoundFX::Fireball);
+      break;
+    case 2:
+      //Set Threshold
+      scannerController->setSensorThreshold(temp_background - temp_hand - 5);
+      Serial.printf("Running Calibration... Threshold:%d\n", temp_background - temp_hand);
+      scannerController->animationCalibrationStep();
+      soundController->playSoundFX(SoundController::SoundFX::Fireball);
+      break;
+    case 1:
+      //Bump Threshold Up
+      temp = scannerController->getSensorThreshold() + 10;
+      scannerController->setSensorThreshold(temp);
+      Serial.printf("Running Calibration... Increase Threshold:%d\n", temp);
+      scannerController->animationCalibrationStep();
+      soundController->playSoundFX(SoundController::SoundFX::Fireball);
+      break;
+    case 3:
+      //Bump Threshold Down
+      temp = scannerController->getSensorThreshold() - 10;
+      temp = (temp < 10)?10:temp;
+      scannerController->setSensorThreshold(temp);
+      Serial.printf("Running Calibration... Decrease Threshold:%d\n", temp);
+      scannerController->animationCalibrationStep();
+      soundController->playSoundFX(SoundController::SoundFX::Fireball);
+      break;
+    
+    default:
+      //do nothing
+      break;
+    }
+  }
+}
+
+//=========================================================
 //- Loop
 //-  main control loop for arduino
 //=========================================================
@@ -80,6 +156,12 @@ void loop()
 
   // run tests
   //system_test(); return;
+
+  //Run Calibration
+  if(calibration) {
+    runCalibrationMode();
+    return;
+  }
 
   //Check for hand present
   if(scannerController->isHandPresent()) {
@@ -98,7 +180,7 @@ void loop()
   if(code != CODE_TYPE::CODE_IMPCOMPLETE)
   {
     //Start Scanning Animation
-    if(code != CODE_TYPE::TURN_OFF_SENSOR)
+    if((code != CODE_TYPE::TURN_OFF_SENSOR) && (code != CODE_TYPE::CALIBRATION))
     {
       scannerController->animationScanning();
       scannerController->clearDisplay();
@@ -109,7 +191,8 @@ void loop()
     //Make sure hand is still present
     scannerController->clearHandPresent();
     if(!scannerController->isHandPresent() &&
-       code != CODE_TYPE::TURN_OFF_SENSOR) {
+       ((code != CODE_TYPE::TURN_OFF_SENSOR) && (code != CODE_TYPE::CALIBRATION))) 
+    {
       //overwrite code
       Serial.println("Failed second hand check");
       code = CODE_TYPE::INVALID_CODE;
@@ -139,6 +222,13 @@ void loop()
       soundController->playSoundFX(SoundController::SoundFX::Coin);
       scannerController->clearDisplay();
       Serial.println("Light Sensor Turned Off");
+      break;
+    case CODE_TYPE::CALIBRATION:
+      calibration = true;
+      scannerController->animationCalibration();
+      soundController->playSoundFX(SoundController::SoundFX::Fireball);
+      scannerController->clearDisplay();
+      Serial.println("Enter Calibration Mode...");
       break;
     case CODE_TYPE::XMAS_TIME:
       scannerController->animationXmas();

@@ -11,7 +11,7 @@
 //LED driver snippet: https://gist.github.com/chadpaulson/1834442
 
 //Sensor Threashold
-#define SENSOR_THRESH 200
+#define SENSOR_THRESH 50
 
 //=========================================================
 //- Scanner Function
@@ -75,6 +75,14 @@ class ScannerController
     void toggleLightSensor(void);
 
     //=========================================================
+    //- Calibration Functions
+    //-  helpers for calibration
+    //=========================================================
+    void setSensorThreshold(int thresh);
+    int getSensorThreshold(void);
+    int takeSensorSample(void);
+
+    //=========================================================
     //- Hand Present Functions
     //-  checks for hand on scanner
     //=========================================================
@@ -98,8 +106,14 @@ class ScannerController
     void animationValidated(void);
     void animationInvalidated(void);
     void animationSensorOff(void);
+    void animationCalibration(void);
+    void animationCalibrationStep(void);
     void animationXmas(void);
     void animationOrder66(void);
+    void animationCannon(void);
+    void animationMario(void);
+    void animationLion(void);
+    void animationTetris(void);
     void clearDisplay(void);
 
 };

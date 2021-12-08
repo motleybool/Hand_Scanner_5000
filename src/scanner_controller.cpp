@@ -74,7 +74,7 @@ void ScannerController::resetController(void)
     clearDisplay();
 
     //Reset Thresholds
-    sesnor_threadhold = SENSOR_THRESH;
+    //sesnor_threadhold = SENSOR_THRESH;
     hand_present = false;
     background_reading = analogRead(LIGHT_SENSOR); //seed background value
 }
@@ -89,7 +89,7 @@ bool ScannerController::takeLightReading(void)
     //take light reading
     int lightvalue = 0;
     lightvalue = analogRead(LIGHT_SENSOR);
-    Serial.printf("Light Sesnsor: %d, Background Value: %d\n", lightvalue, background_reading);
+    Serial.printf("Light Sesnsor: %d, Background Value: %d, Threshold %d\n", lightvalue, background_reading, sesnor_threadhold);
 
     //if bypass set return true
     if(bypass_sensor)
@@ -105,7 +105,13 @@ bool ScannerController::takeLightReading(void)
     }
     // otherwise update background
     else {
-        background_reading = lightvalue;
+        int AVG = 6;
+        if(lightvalue > background_reading) {
+            background_reading = lightvalue;
+        }
+        else {
+            background_reading = (lightvalue + background_reading*AVG)/(AVG+1);
+        }
     }
 
     return false;
@@ -295,6 +301,24 @@ void ScannerController::clearDisplay(void)
 void ScannerController::toggleLightSensor(void)
 {
     bypass_sensor = !bypass_sensor;
+    sesnor_threadhold = SENSOR_THRESH;
+}
+
+//=========================================================
+//- Calibration Functions
+//-  helpers for calibration
+//=========================================================
+void ScannerController::setSensorThreshold(int thresh)
+{
+    sesnor_threadhold = thresh;
+}
+int ScannerController::getSensorThreshold(void)
+{
+    return sesnor_threadhold;
+}
+int ScannerController::takeSensorSample(void)
+{
+    return analogRead(LIGHT_SENSOR);
 }
 
 //=========================================================
@@ -469,6 +493,14 @@ void ScannerController::animationInvalidated(void)
 void ScannerController::animationSensorOff(void)
 {
     blinkDisplay(LED_COLORS::YELLOW, 2, 200, 100);
+}
+void ScannerController::animationCalibration(void)
+{
+    blinkDisplay(LED_COLORS::WHITE, 2, 200, 100);
+}
+void ScannerController::animationCalibrationStep(void)
+{
+    blinkDisplay(LED_COLORS::MAGENTA, 2, 200, 100);
 }
 void ScannerController::animationXmas(void)
 {
