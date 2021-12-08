@@ -43,10 +43,10 @@ KeypadController::KeypadController(int gpio_exp_addr, int led_1_pin, int led_2_p
   unsigned int sleepTime = 0;
 
   // Scan time range: 1-128 ms, powers of 2
-  byte scanTime = 16; // Scan time per row, in ms
+  byte scanTime = 64; // Scan time per row, in ms
   
   // Debounce time range: 0.5 - 64 ms (powers of 2)
-  byte debounceTime = 8; // Debounce time
+  byte debounceTime = 32; // Debounce time
 
   // Initialize Keypad
   pIO->keypad(KEY_ROWS, KEY_COLS, sleepTime, scanTime, debounceTime);
@@ -70,6 +70,14 @@ void KeypadController::resetController(void)
   key_code.code[1] = -1;
   key_code.code[2] = -1;
   key_code.index = 0;
+
+  //purge any extra keypresses
+  while(!digitalRead(INTERUPT))
+  {
+    // Use readKeypad() to get a binary representation for
+    // which row and column are pressed
+    unsigned int keyData = pIO->readKeypad();
+  }
 }
 
   //=========================================================
