@@ -93,9 +93,9 @@ void KeypadController::resetController(void)
         byte col = pIO->getCol(keyData);
         char key = keyMap[row][col];
         int val = keyValue[row][col];
-        Serial.print(String(row) + " | " + String(col) + " | ");
-        Serial.println(key);
-        Serial.printf("value - %d\n", val);
+        //Serial.print(String(row) + " | " + String(col) + " | ");
+        //Serial.println(key);
+        //Serial.printf("value - %d\n", val);
 
         //Save to code store
         key_code.code[key_code.index] = val;
@@ -153,6 +153,25 @@ CODE_TYPE KeypadController::evaluateCode(void)
     }
     //Valid Maine Code
     else if(key_code.code[0] == Maine_1 && key_code.code[1] == Maine_2 && key_code.code[2] == Maine_3)
+    {
+      return CODE_TYPE::VALID_CODE;
+    }
+    //Valid Kids Codes
+    else if((key_code.code[0] == 3 && key_code.code[1] == 5 && key_code.code[2] == 2) ||
+            (key_code.code[0] == 7 && key_code.code[1] == 3 && key_code.code[2] == 6) ||
+            (key_code.code[0] == 9 && key_code.code[1] == 2 && key_code.code[2] == 2) ||
+            (key_code.code[0] == 1 && key_code.code[1] == 5 && key_code.code[2] == 3) ||
+            (key_code.code[0] == 6 && key_code.code[1] == 6 && key_code.code[2] == 4) ||
+            (key_code.code[0] == 4 && key_code.code[1] == 8 && key_code.code[2] == 0) ||
+            (key_code.code[0] == 2 && key_code.code[1] == 0 && key_code.code[2] == 5) ||
+            (key_code.code[0] == 3 && key_code.code[1] == 7 && key_code.code[2] == 1) ||
+            (key_code.code[0] == 5 && key_code.code[1] == 7 && key_code.code[2] == 3) ||
+            (key_code.code[0] == 4 && key_code.code[1] == 4 && key_code.code[2] == 2) ||
+            (key_code.code[0] == 2 && key_code.code[1] == 0 && key_code.code[2] == 9) ||
+            (key_code.code[0] == 8 && key_code.code[1] == 1 && key_code.code[2] == 4) ||
+            (key_code.code[0] == 1 && key_code.code[1] == 7 && key_code.code[2] == 2) ||
+            (key_code.code[0] == 5 && key_code.code[1] == 1 && key_code.code[2] == 0) ||
+            (key_code.code[0] == 9 && key_code.code[1] == 7 && key_code.code[2] == 3))
     {
       return CODE_TYPE::VALID_CODE;
     }
